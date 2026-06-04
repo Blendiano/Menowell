@@ -35,7 +35,7 @@ export function EditProfileForm({ user }: { user: TUserData }) {
       })
 
       if ('error' in result) {
-        setError(result.error)
+        setError(result.error ?? 'Something went wrong.')
       } else {
         setSuccess(true)
         router.refresh()

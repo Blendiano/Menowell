@@ -20,7 +20,7 @@ export function CommentForm({ postId }: { postId: string }) {
     startTransition(async () => {
       const result = await createComment(postId, { content })
       if ('error' in result) {
-        setError(result.error)
+        setError(result.error ?? 'Something went wrong.')
       } else {
         event.currentTarget.reset()
         router.refresh()

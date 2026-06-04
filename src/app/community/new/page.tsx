@@ -24,7 +24,7 @@ export default function NewPostPage() {
       })
 
       if ('error' in result) {
-        setError(result.error)
+        setError(result.error ?? 'Something went wrong.')
       } else {
         router.push('/community')
       }
