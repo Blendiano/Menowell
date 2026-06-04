@@ -2,6 +2,8 @@ import { prisma } from '@/lib/prisma'
 import type { EducationalArticle } from '@prisma/client'
 import styles from './learn.module.css'
 
+export const dynamic = 'force-dynamic'
+
 export default async function LearnPage() {
   const articles = await prisma.educationalArticle.findMany({
     orderBy: { createdAt: 'desc' },

@@ -6,6 +6,8 @@ import { getStage } from '@/services/user-service'
 import { getLatestInsight } from '@/services/insight-service'
 import styles from './dashboard.module.css'
 
+export const dynamic = 'force-dynamic'
+
 const SYMPTOM_LABELS: Record<string, string> = {
   hot_flash: 'Hot Flash', night_sweat: 'Night Sweat', fatigue: 'Fatigue',
   insomnia: 'Insomnia', anxiety: 'Anxiety', mood_swing: 'Mood Swing',

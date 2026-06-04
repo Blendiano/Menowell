@@ -5,6 +5,8 @@ import { CommentForm } from './comment-form'
 import type { CommunityPost, Comment, User } from '@prisma/client'
 import styles from './post-detail.module.css'
 
+export const dynamic = 'force-dynamic'
+
 type TPostWithRelations = CommunityPost & {
   user: Pick<User, 'name'> | null
   comments: (Comment & { user: Pick<User, 'name'> | null })[]

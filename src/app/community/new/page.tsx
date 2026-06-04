@@ -6,6 +6,8 @@ import { createPost } from '@/features/community/actions'
 import { Button } from '@/components/ui/button'
 import styles from './new-post.module.css'
 
+export const dynamic = 'force-dynamic'
+
 export default function NewPostPage() {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()

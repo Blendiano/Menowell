@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma'
 import type { AIInsight } from '@prisma/client'
 import styles from './insights.module.css'
 
+export const dynamic = 'force-dynamic'
+
 export default async function InsightsPage() {
   const session = await auth()
   if (!session) redirect('/auth/login')

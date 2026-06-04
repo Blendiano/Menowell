@@ -5,6 +5,8 @@ import { getStage } from '@/services/user-service'
 import Link from 'next/link'
 import styles from './profile.module.css'
 
+export const dynamic = 'force-dynamic'
+
 const STAGE_LABELS: Record<string, string> = {
   premenopausal: 'Premenopausal',
   perimenopausal_early: 'Early Perimenopause',

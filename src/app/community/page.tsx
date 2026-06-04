@@ -5,6 +5,8 @@ import type { CommunityPost, User } from '@prisma/client'
 import Link from 'next/link'
 import styles from './community.module.css'
 
+export const dynamic = 'force-dynamic'
+
 export default async function CommunityPage() {
   const session = await auth()
   if (!session) redirect('/auth/login')

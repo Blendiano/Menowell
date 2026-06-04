@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { createSymptomLog } from '@/features/symptoms/actions'
 import styles from './new-symptom.module.css'
 
+export const dynamic = 'force-dynamic'
+
 const SYMPTOMS = [
   { value: 'hot_flash', label: 'Hot Flash' },
   { value: 'night_sweat', label: 'Night Sweat' },

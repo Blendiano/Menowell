@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma'
 import { EditProfileForm } from './edit-profile-form'
 import styles from './edit-profile.module.css'
 
+export const dynamic = 'force-dynamic'
+
 export default async function EditProfilePage() {
   const session = await auth()
   if (!session) redirect('/auth/login')

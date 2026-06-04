@@ -5,6 +5,8 @@ import { MarkAllReadButton } from './mark-all-read-button'
 import type { Notification } from '@prisma/client'
 import styles from './notifications.module.css'
 
+export const dynamic = 'force-dynamic'
+
 export default async function NotificationsPage() {
   const session = await auth()
   if (!session) redirect('/auth/login')
