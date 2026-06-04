@@ -1,0 +1,40 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sm { padding: 2px 10px; font-size: 11px; line-height: 1.4; }
+.md { padding: 4px 14px; font-size: 13px; line-height: 1.4; }
+
+.primary {
+  background: var(--sys-color-primary-primary-container, #edd9fc);
+  color: var(--sys-color-primary-on-primary-container, #550a8f);
+}
+
+.secondary {
+  background: var(--sys-color-secondary-secondary-container, #edd9fc);
+  color: var(--sys-color-secondary-on-secondary-container, #550a8f);
+}
+
+.error {
+  background: var(--sys-color-error-error-container, #fccfd0);
+  color: var(--sys-color-error-on-error-container, #8f090c);
+}
+
+.success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.neutral {
+  background: var(--sys-color-surface-surface-variant, #e4ebf2);
+  color: var(--sys-color-surface-on-surface-variant, #334e68);
+}

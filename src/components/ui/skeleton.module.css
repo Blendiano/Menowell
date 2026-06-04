@@ -1,0 +1,44 @@
+.root {
+  background: var(--sys-color-surface-surface-container-highest, #deebf7);
+  border-radius: 8px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.text {
+  height: 16px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.rect {
+  border-radius: 10px;
+}
+
+.card {
+  background: var(--sys-color-surface-surface, #ffffff);
+  border: 1px solid var(--sys-color-outline-outline-variant, #bbccdd);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root { animation: none; opacity: 0.4; }
+}

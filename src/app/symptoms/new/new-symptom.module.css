@@ -1,0 +1,18 @@
+.root { max-width: 520px; margin: 0 auto; padding: 40px 24px; }
+.title { font-size: 28px; font-weight: 700; color: var(--sys-color-surface-on-surface, #0f273e); margin-bottom: 6px; }
+.disclaimer { font-size: 13px; color: var(--sys-color-surface-on-surface-variant, #334e68); margin-bottom: 32px; font-style: italic; }
+.form { display: flex; flex-direction: column; gap: 24px; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.label { font-size: 14px; font-weight: 500; color: var(--sys-color-surface-on-surface, #0f273e); }
+.optional { font-weight: 400; color: var(--sys-color-surface-on-surface-variant, #334e68); }
+.select, .textarea { border: 1.5px solid var(--sys-color-outline-outline-variant, #bbccdd); border-radius: 8px; padding: 12px 14px; font-size: 15px; font-family: inherit; color: var(--sys-color-surface-on-surface, #0f273e); background: var(--sys-color-surface-surface, #ffffff); outline: none; transition: border-color 200ms ease-out; width: 100%; }
+.select:focus-visible, .textarea:focus-visible { border-color: var(--sys-color-primary-primary, #690cb0); box-shadow: 0 0 0 3px rgba(105,12,176,0.12); }
+.textarea { resize: vertical; min-height: 80px; }
+.slider { width: 100%; accent-color: var(--sys-color-primary-primary, #690cb0); }
+.sliderLabels { display: flex; justify-content: space-between; font-size: 12px; color: var(--sys-color-surface-on-surface-variant, #334e68); }
+.error { font-size: 14px; color: var(--sys-color-error-error, #f01b1f); background: var(--sys-color-error-error-container, #fccfd0); border-radius: 8px; padding: 10px 14px; }
+.actions { display: flex; gap: 12px; justify-content: flex-end; }
+.cancelBtn { background: transparent; border: 1.5px solid var(--sys-color-outline-outline-variant, #bbccdd); border-radius: 9999px; padding: 12px 24px; font-size: 14px; font-family: inherit; cursor: pointer; color: var(--sys-color-surface-on-surface, #0f273e); }
+.submitBtn { background: var(--sys-color-primary-primary, #690cb0); color: var(--sys-color-primary-on-primary, #fff); border: none; border-radius: 9999px; padding: 12px 28px; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer; transition: opacity 200ms ease-out; }
+.submitBtn:hover:not(:disabled) { opacity: 0.88; }
+.submitBtn:disabled { opacity: 0.6; cursor: not-allowed; }

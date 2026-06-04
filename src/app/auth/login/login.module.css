@@ -1,0 +1,125 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+  background: var(--sys-color-add-on-surface-colors-background, #f7fafd);
+}
+
+.card {
+  background: var(--sys-color-surface-surface, #ffffff);
+  border: 1px solid var(--sys-color-outline-outline-variant, #bbccdd);
+  border-radius: 16px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 4px 24px rgba(15, 39, 62, 0.08);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.brand {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--sys-color-primary-primary, #690cb0);
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: var(--sys-color-surface-on-surface-variant, #334e68);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sys-color-surface-on-surface, #0f273e);
+}
+
+.forgotLink {
+  font-size: 13px;
+  color: var(--sys-color-primary-primary, #690cb0);
+}
+
+.input {
+  border: 1.5px solid var(--sys-color-outline-outline-variant, #bbccdd);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--sys-color-surface-on-surface, #0f273e);
+  background: var(--sys-color-surface-surface, #ffffff);
+  transition: border-color 200ms ease-out;
+  outline: none;
+  width: 100%;
+}
+
+.input:focus-visible {
+  border-color: var(--sys-color-primary-primary, #690cb0);
+  box-shadow: 0 0 0 3px rgba(105, 12, 176, 0.12);
+}
+
+.errorMsg {
+  font-size: 14px;
+  color: var(--sys-color-error-error, #f01b1f);
+  background: var(--sys-color-error-error-container, #fccfd0);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.submitBtn {
+  background: var(--sys-color-primary-primary, #690cb0);
+  color: var(--sys-color-primary-on-primary, #ffffff);
+  border: none;
+  border-radius: 9999px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 200ms ease-out;
+  margin-top: 4px;
+}
+
+.submitBtn:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.registerPrompt {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--sys-color-surface-on-surface-variant, #334e68);
+}
+
+.registerLink {
+  color: var(--sys-color-primary-primary, #690cb0);
+  font-weight: 600;
+}

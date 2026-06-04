@@ -1,0 +1,58 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sys-color-surface-on-surface, #0f273e);
+}
+
+.input {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--sys-color-outline-outline-variant, #bbccdd);
+  border-radius: 10px;
+  background: var(--sys-color-surface-surface, #ffffff);
+  color: var(--sys-color-surface-on-surface, #0f273e);
+  transition: border-color 200ms ease-out, box-shadow 200ms ease-out;
+  line-height: 1.4;
+}
+
+.input::placeholder {
+  color: var(--sys-color-surface-on-surface-variant, #334e68);
+  opacity: 0.5;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--sys-color-primary-primary, #690cb0);
+  box-shadow: 0 0 0 3px var(--sys-color-primary-primary-container, #edd9fc);
+}
+
+.inputError {
+  border-color: var(--sys-color-error-error, #f01b1f);
+}
+
+.inputError:focus {
+  box-shadow: 0 0 0 3px var(--sys-color-error-error-container, #fccfd0);
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--sys-color-surface-surface-variant, #e4ebf2);
+}
+
+.error {
+  font-size: 13px;
+  color: var(--sys-color-error-error, #f01b1f);
+}
+
+.helper {
+  font-size: 13px;
+  color: var(--sys-color-surface-on-surface-variant, #334e68);
+}

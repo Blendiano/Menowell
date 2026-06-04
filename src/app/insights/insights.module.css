@@ -1,0 +1,8 @@
+.root { max-width: 720px; margin: 0 auto; padding: 40px 24px; }
+.title { font-size: 28px; font-weight: 700; color: var(--sys-color-surface-on-surface, #0f273e); margin-bottom: 8px; }
+.disclaimer { font-size: 13px; color: var(--sys-color-surface-on-surface-variant, #334e68); font-style: italic; margin-bottom: 28px; }
+.empty { text-align: center; padding: 64px 24px; font-size: 16px; color: var(--sys-color-surface-on-surface-variant, #334e68); }
+.list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+.insightCard { background: var(--sys-color-primary-primary-container, #edd9fc); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+.insightText { font-size: 16px; color: var(--sys-color-primary-on-primary-container, #550a8f); line-height: 1.6; }
+.date { font-size: 12px; color: var(--sys-color-primary-on-primary-container, #550a8f); opacity: 0.7; }
