@@ -17,8 +17,9 @@ export default function NewPostPage() {
     const form = new FormData(event.currentTarget)
 
     startTransition(async () => {
+      const content = (form.get('content') as string) ?? ''
       const result = await createPost({
-        content: form.get('content') as string,
+        content,
         anonymous: form.get('anonymous') === 'on',
       })
 

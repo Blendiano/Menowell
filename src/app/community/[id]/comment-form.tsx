@@ -15,7 +15,7 @@ export function CommentForm({ postId }: { postId: string }) {
     event.preventDefault()
     setError(null)
     const form = new FormData(event.currentTarget)
-    const content = form.get('content') as string
+    const content = (form.get('content') as string) ?? ''
 
     startTransition(async () => {
       const result = await createComment(postId, { content })

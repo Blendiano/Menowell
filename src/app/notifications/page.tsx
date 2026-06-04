@@ -10,7 +10,7 @@ export default async function NotificationsPage() {
   if (!session) redirect('/auth/login')
 
   const notifications = await prisma.notification.findMany({
-    where: { userId: session.user.id! },
+    where: { userId: session.user!.id! },
     orderBy: { createdAt: 'desc' },
     take: 50,
   }) as Notification[]

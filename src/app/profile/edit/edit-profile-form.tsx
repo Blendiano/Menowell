@@ -28,9 +28,9 @@ export function EditProfileForm({ user }: { user: TUserData }) {
 
     startTransition(async () => {
       const result = await updateProfile({
-        name: form.get('name') as string,
-        dateOfBirth: form.get('dateOfBirth') as string,
-        preferredLanguage: form.get('preferredLanguage') as string,
+        name: (form.get('name') as string) ?? '',
+        dateOfBirth: (form.get('dateOfBirth') as string) ?? '',
+        preferredLanguage: (form.get('preferredLanguage') as string) ?? '',
         notificationPreference: form.get('notificationPreference') === 'on',
       })
 

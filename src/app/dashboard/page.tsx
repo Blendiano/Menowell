@@ -24,7 +24,7 @@ export default async function DashboardPage() {
   const session = await auth()
   if (!session) redirect('/auth/login')
 
-  const userId = session.user.id!
+  const userId = session.user!.id!
 
   const [symptomSummary, stage, latestInsight] = await Promise.all([
     getRecentSymptomSummary(userId),

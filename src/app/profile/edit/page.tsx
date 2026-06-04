@@ -9,7 +9,7 @@ export default async function EditProfilePage() {
   if (!session) redirect('/auth/login')
 
   const user = await prisma.user.findUnique({
-    where: { id: session.user.id! },
+    where: { id: session.user!.id! },
     select: {
       name: true,
       email: true,
