@@ -24,11 +24,11 @@ export default async function LandingPage() {
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>
-            Navigate menopause with&nbsp;confidence
+            Track symptoms, gain insights,<br />
+            and navigate menopause with confidence.
           </h1>
           <p className={styles.heroSubtitle}>
-            Track symptoms, discover patterns, and connect with a community that understands.
-            Your personalized menopause companion.
+            Monitor your symptoms, understand patterns, and access personalized support throughout your menopause journey.
           </p>
           <div className={styles.heroActions}>
             <Link href="/auth/register" className={styles.btnPrimary}>Start Your Journey</Link>

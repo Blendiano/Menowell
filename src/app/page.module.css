@@ -40,7 +40,7 @@
 .navLink {
   font-size: var(--sys-typography-text-md-medium-font-size, 16px);
   font-weight: 600;
-  color: var(--sys-color-surface-on-surface, #0f273e);
+  color: var(--sys-color-surface-on-surface-variant, #334e68);
   padding: 4px 0;
   border-bottom: 2px solid transparent;
   transition: color 200ms, border-color 200ms;
@@ -83,10 +83,10 @@
 }
 
 .heroTitle {
-  font-size: var(--sys-typography-display-xl-bold-font-size, 60px);
+  font-size: var(--sys-typography-display-lg-bold-font-size, 48px);
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -1.2px;
+  line-height: 1.2;
+  letter-spacing: -0.96px;
   color: var(--sys-color-surface-on-surface, #0f273e);
   text-wrap: balance;
 }
