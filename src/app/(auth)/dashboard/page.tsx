@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth'
+import { getCurrentUser } from '@/lib/user'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getRecentSymptomSummary } from '@/services/symptom-service'
@@ -23,10 +23,10 @@ const STAGE_LABELS: Record<string, string> = {
 }
 
 export default async function DashboardPage() {
-  const session = await auth()
-  if (!session) redirect('/auth/login')
+  const user = await getCurrentUser()
+  if (!user) redirect('/auth/login')
 
-  const userId = session.user!.id!
+  const userId = user.id!
 
   const [symptomSummary, stage, latestInsight] = await Promise.all([
     getRecentSymptomSummary(userId),
@@ -34,7 +34,7 @@ export default async function DashboardPage() {
     getLatestInsight(userId),
   ])
 
-  const firstName = session.user?.name?.split(' ')[0] ?? 'there'
+  const firstName = user.name?.split(' ')[0] ?? 'there'
 
   return (
     <main className={styles.root}>

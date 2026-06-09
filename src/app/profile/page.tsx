@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth'
+import { getCurrentUser } from '@/lib/user'
 import { redirect } from 'next/navigation'
 import { signOut } from '@/lib/auth'
 import { getStage } from '@/services/user-service'
@@ -16,11 +16,10 @@ const STAGE_LABELS: Record<string, string> = {
 }
 
 export default async function ProfilePage() {
-  const session = await auth()
-  if (!session) redirect('/auth/login')
+  const user = await getCurrentUser()
+  if (!user) redirect('/auth/login')
 
-  const { user } = session
-  const stage = await getStage(user!.id!)
+  const stage = await getStage(user.id)
 
   return (
     <main className={styles.root}>
