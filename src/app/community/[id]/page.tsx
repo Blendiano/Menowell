@@ -19,7 +19,7 @@ export default async function PostDetailPage({
   params: Promise<{ id: string }>
 }) {
   const session = await auth()
-  if (!session) redirect('/auth/login')
+  if (!session) redirect('/auth')
 
   const { id } = await params
 

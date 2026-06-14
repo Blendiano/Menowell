@@ -24,7 +24,9 @@ const STAGE_LABELS: Record<string, string> = {
 
 export default async function DashboardPage() {
   const user = await getCurrentUser()
-  if (!user) redirect('/auth/login')
+  if (!user) redirect('/auth')
+
+  if (!user.onboardingCompleted) redirect('/onboarding')
 
   const userId = user.id!
 

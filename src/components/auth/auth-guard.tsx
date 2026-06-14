@@ -14,7 +14,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     if (status === 'loading') return
 
     if (status === 'unauthenticated' || !session) {
-      router.replace('/auth/login')
+      router.replace('/auth')
       return
     }
 
@@ -25,7 +25,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
         setReady(true)
       } catch {
         await signOut({ redirect: false })
-        router.replace('/auth/login')
+        router.replace('/auth')
       }
     }
 

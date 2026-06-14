@@ -1,0 +1,32 @@
+.root { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:24px 16px; background:var(--sys-color-add-on-surface-colors-background,#f7fafd); }
+.card { background:var(--sys-color-surface-surface,#ffffff); border-radius:16px; padding:40px 36px; width:100%; max-width:520px; box-shadow:0 4px 24px rgba(15,39,62,0.08); }
+.header { text-align:center; margin-bottom:24px; }
+.brand { font-size:20px; font-weight:700; color:var(--sys-color-primary-primary,#690cb0); margin-bottom:4px; }
+.steps { display:flex; justify-content:center; gap:8px; margin-bottom:32px; }
+.stepDot { width:8px; height:8px; border-radius:50%; background:var(--sys-color-outline-outline-variant,#bbccdd); transition:background 200ms; }
+.stepDotActive { background:var(--sys-color-primary-primary,#690cb0); }
+.stepDotDone { background:var(--sys-color-primary-primary-container,#edd9fc); }
+.stepHeading { font-size:22px; font-weight:700; color:var(--sys-color-surface-on-surface,#0f273e); margin-bottom:8px; }
+.stepDesc { font-size:14px; color:var(--sys-color-surface-on-surface-variant,#334e68); margin-bottom:24px; }
+.form { display:flex; flex-direction:column; gap:20px; }
+.field { display:flex; flex-direction:column; gap:6px; }
+.label { font-size:14px; font-weight:500; color:var(--sys-color-surface-on-surface,#0f273e); }
+.input { border:1.5px solid var(--sys-color-outline-outline-variant,#bbccdd); border-radius:8px; padding:12px 14px; font-size:15px; font-family:inherit; color:var(--sys-color-surface-on-surface,#0f273e); background:var(--sys-color-surface-surface,#ffffff); transition:border-color 200ms ease-out; outline:none; width:100%; }
+.input:focus-visible { border-color:var(--sys-color-primary-primary,#690cb0); box-shadow:0 0 0 3px rgba(105,12,176,0.12); }
+.radioGroup { display:flex; flex-direction:column; gap:10px; }
+.radioLabel { display:flex; align-items:center; gap:10px; padding:12px 16px; border:1.5px solid var(--sys-color-outline-outline-variant,#bbccdd); border-radius:10px; cursor:pointer; transition:border-color 200ms, background 200ms; font-size:15px; color:var(--sys-color-surface-on-surface,#0f273e); }
+.radioLabel:hover { border-color:var(--sys-color-primary-primary,#690cb0); }
+.radioLabelSelected { border-color:var(--sys-color-primary-primary,#690cb0); background:var(--sys-color-primary-primary-container,#edd9fc); }
+.radioInput { position:absolute; opacity:0; pointer-events:none; }
+.checkboxGroup { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.checkboxLabel { display:flex; align-items:center; gap:8px; padding:10px 14px; border:1.5px solid var(--sys-color-outline-outline-variant,#bbccdd); border-radius:8px; cursor:pointer; transition:border-color 200ms, background 200ms; font-size:14px; color:var(--sys-color-surface-on-surface,#0f273e); }
+.checkboxLabel:hover { border-color:var(--sys-color-primary-primary,#690cb0); }
+.checkboxSelected { border-color:var(--sys-color-primary-primary,#690cb0); background:var(--sys-color-primary-primary-container,#edd9fc); }
+.checkboxInput { position:absolute; opacity:0; pointer-events:none; }
+.actions { display:flex; justify-content:space-between; gap:12px; margin-top:8px; }
+.btnPrimary { display:inline-flex; align-items:center; justify-content:center; padding:12px 28px; border-radius:9999px; font-size:15px; font-weight:600; font-family:inherit; background:var(--sys-color-primary-primary,#690cb0); color:var(--sys-color-primary-on-primary,#ffffff); border:none; cursor:pointer; transition:opacity 200ms; }
+.btnPrimary:hover { opacity:0.88; }
+.btnPrimary:disabled { opacity:0.6; cursor:not-allowed; }
+.btnSecondary { display:inline-flex; align-items:center; justify-content:center; padding:12px 28px; border-radius:9999px; font-size:15px; font-weight:600; font-family:inherit; background:transparent; color:var(--sys-color-primary-primary,#690cb0); border:1.5px solid var(--sys-color-primary-primary,#690cb0); cursor:pointer; transition:background 200ms; }
+.btnSecondary:hover { background:var(--sys-color-primary-primary-container,#edd9fc); }
+.errorMsg { font-size:13px; color:var(--sys-color-error-error,#f01b1f); margin-top:2px; }

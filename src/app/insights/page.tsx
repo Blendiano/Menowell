@@ -8,9 +8,9 @@ export const dynamic = 'force-dynamic'
 
 export default async function InsightsPage() {
   const session = await auth()
-  if (!session) redirect('/auth/login')
+  if (!session) redirect('/auth')
 
-  if (!session?.user?.id) redirect('/auth/login')
+  if (!session?.user?.id) redirect('/auth')
 
   const insights = await prisma.aIInsight.findMany({
     where: { userId: session.user.id! },

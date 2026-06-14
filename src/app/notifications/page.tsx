@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function NotificationsPage() {
   const session = await auth()
-  if (!session) redirect('/auth/login')
+  if (!session) redirect('/auth')
 
   const notifications = await prisma.notification.findMany({
     where: { userId: session.user!.id! },

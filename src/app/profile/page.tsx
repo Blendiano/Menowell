@@ -17,7 +17,7 @@ const STAGE_LABELS: Record<string, string> = {
 
 export default async function ProfilePage() {
   const user = await getCurrentUser()
-  if (!user) redirect('/auth/login')
+  if (!user) redirect('/auth')
 
   const stage = await getStage(user.id)
 

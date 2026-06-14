@@ -14,7 +14,7 @@ const SYMPTOM_LABELS: Record<string, string> = {
 
 export default async function SymptomsPage() {
   const session = await auth()
-  if (!session) redirect('/auth/login')
+  if (!session) redirect('/auth')
 
   const logs = await getSymptomHistory()
 

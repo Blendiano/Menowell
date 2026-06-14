@@ -1,6 +1,7 @@
 import { getCurrentUser } from '@/lib/user'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import { TransitionLink } from '@/components/ui/transition-link'
 import styles from './page.module.css'
 
 export default async function LandingPage() {
@@ -8,31 +9,31 @@ export default async function LandingPage() {
   if (user) redirect('/dashboard')
 
   return (
-    <div className={styles.page}>
+    <div id="page-root" className={styles.page}>
       <header className={styles.header}>
         <div className={styles.headerInner}>
           <Link href="/" className={styles.logo}>Menowell</Link>
           <nav className={styles.nav}>
             <Link href="#features" className={styles.navLink}>Features</Link>
             <Link href="#how-it-works" className={styles.navLink}>How It Works</Link>
-            <Link href="/auth/login" className={styles.navLink}>Log in</Link>
-            <Link href="/auth/register" className={styles.navCta}>Get Started</Link>
           </nav>
+          <div className={styles.headerActions}>
+            <TransitionLink href="/auth" className={styles.navOutline}>Log in</TransitionLink>
+            <TransitionLink href="/auth?mode=register" className={styles.navCta}>Get Started</TransitionLink>
+          </div>
         </div>
       </header>
 
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>
-            Track symptoms, gain insights,<br />
-            and navigate menopause with confidence.
+            Track symptoms. Understand menopause.
           </h1>
           <p className={styles.heroSubtitle}>
-            Monitor your symptoms, understand patterns, and access personalized support throughout your menopause journey.
+            Get personalized insights, monitor changes, and feel supported every step of the way.
           </p>
           <div className={styles.heroActions}>
-            <Link href="/auth/register" className={styles.btnPrimary}>Start Your Journey</Link>
-            <Link href="#features" className={styles.btnSecondary}>Learn More</Link>
+            <TransitionLink href="/auth?mode=register" className={styles.btnPrimary}>Start Tracking</TransitionLink>
           </div>
         </div>
       </section>
@@ -45,22 +46,22 @@ export default async function LandingPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureIcon}>📊</div>
               <h3 className={styles.featureName}>Symptom Tracking</h3>
-              <p className={styles.featureDesc}>Log daily symptoms and see how they change over time. Identify triggers and patterns.</p>
+              <p className={styles.featureDesc}>Track symptoms and spot patterns over time.</p>
             </div>
             <div className={styles.featureCard}>
               <div className={styles.featureIcon}>✨</div>
               <h3 className={styles.featureName}>Personalized Insights</h3>
-              <p className={styles.featureDesc}>Get data-driven insights about your cycle, symptom correlations, and trends.</p>
+              <p className={styles.featureDesc}>Get personalized insights from your symptom data.</p>
             </div>
             <div className={styles.featureCard}>
               <div className={styles.featureIcon}>💬</div>
               <h3 className={styles.featureName}>Community Support</h3>
-              <p className={styles.featureDesc}>Join a safe space to share experiences, ask questions, and find encouragement.</p>
+              <p className={styles.featureDesc}>Connect, share experiences, and find support.</p>
             </div>
             <div className={styles.featureCard}>
               <div className={styles.featureIcon}>📚</div>
               <h3 className={styles.featureName}>Learn & Grow</h3>
-              <p className={styles.featureDesc}>Access curated articles and resources from healthcare professionals.</p>
+              <p className={styles.featureDesc}>Access trusted menopause resources.</p>
             </div>
           </div>
         </div>
@@ -96,7 +97,7 @@ export default async function LandingPage() {
         <div className={styles.sectionInner}>
           <h2 className={styles.ctaTitle}>Ready to take control?</h2>
           <p className={styles.ctaDesc}>Join thousands of women navigating menopause with confidence.</p>
-          <Link href="/auth/register" className={styles.btnPrimary}>Get Started Free</Link>
+          <TransitionLink href="/auth?mode=register" className={styles.btnPrimary}>Get Started Free</TransitionLink>
         </div>
       </section>
 
@@ -106,7 +107,7 @@ export default async function LandingPage() {
           <div className={styles.footerLinks}>
             <Link href="#features" className={styles.footerLink}>Features</Link>
             <Link href="#how-it-works" className={styles.footerLink}>How It Works</Link>
-            <Link href="/auth/login" className={styles.footerLink}>Log in</Link>
+            <TransitionLink href="/auth" className={styles.footerLink}>Log in</TransitionLink>
           </div>
           <p className={styles.footerCopy}>&copy; {new Date().getFullYear()} Menowell. All rights reserved.</p>
         </div>

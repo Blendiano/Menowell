@@ -13,15 +13,20 @@ model User {
   emailVerified          DateTime?
   image                  String?
   passwordHash           String?
-  dateOfBirth            DateTime?
-  preferredLanguage      String    @default("en")
-  notificationPreference Boolean   @default(true)
-  createdAt              DateTime  @default(now())
+   dateOfBirth            DateTime?
+   preferredLanguage      String    @default("en")
+   notificationPreference Boolean   @default(true)
+   menstrualStatus        String?
+   selectedSymptoms       String?
+   symptomSeverity        String?
+   goals                  String?
+   onboardingCompleted    Boolean   @default(false)
+   createdAt              DateTime  @default(now())
 
-  accounts               Account[]
-  sessions               Session[]
+   accounts               Account[]
+   sessions               Session[]
 
-  symptoms               SymptomLog[]
+   symptoms               SymptomLog[]
   stages                 MenopauseStage[]
   insights               AIInsight[]
   posts                  CommunityPost[]

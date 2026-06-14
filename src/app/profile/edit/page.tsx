@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function EditProfilePage() {
   const session = await auth()
-  if (!session) redirect('/auth/login')
+  if (!session) redirect('/auth')
 
   const user = await prisma.user.findUnique({
     where: { id: session.user!.id! },
