@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
@@ -12,6 +12,19 @@ export function RegisterForm() {
   const [loading, setLoading] = useState(false)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [showPassword, setShowPassword] = useState(false)
+  const [passwordValue, setPasswordValue] = useState('')
+
+  const PASSWORD_RULES = [
+    { key: 'uppercase', label: 'At least one uppercase letter', test: (p: string) => /[A-Z]/.test(p) },
+    { key: 'number', label: 'At least one number', test: (p: string) => /[0-9]/.test(p) },
+    { key: 'special', label: 'At least one special character', test: (p: string) => /[^A-Za-z0-9]/.test(p) },
+    { key: 'minlength', label: 'At least 8 characters', test: (p: string) => p.length >= 8 },
+  ]
+
+  const activeRequirement = useMemo(() => {
+    if (!passwordValue) return null
+    return PASSWORD_RULES.find(rule => !rule.test(passwordValue)) ?? null
+  }, [passwordValue])
 
   const clearFieldError = useCallback((field: string) => {
     setFieldErrors(prev => {
@@ -52,6 +65,22 @@ export function RegisterForm() {
     if (!name?.trim()) errors.name = 'This field cannot be empty'
     if (!email?.trim()) errors.email = 'This field cannot be empty'
     if (!password?.trim()) errors.password = 'This field cannot be empty'
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      setLoading(false)
+      return
+    }
+
+    if (!/[A-Z]/.test(password)) {
+      errors.password = 'At least one uppercase letter required'
+    } else if (!/[0-9]/.test(password)) {
+      errors.password = 'At least one number required'
+    } else if (!/[^A-Za-z0-9]/.test(password)) {
+      errors.password = 'At least one special character required'
+    } else if (password.length < 8) {
+      errors.password = 'At least 8 characters required'
+    }
 
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
@@ -100,9 +129,9 @@ export function RegisterForm() {
       </div>
 
       <div className={styles.field}>
-        <label htmlFor="password" className={styles.label}>Enter password <span className={styles.hint}>(min. 8 characters)</span></label>
+        <label htmlFor="password" className={styles.label}>Enter password</label>
         <div className={styles.passwordWrapper}>
-          <input id="password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="new-password" required minLength={8} className={styles.input} placeholder="••••••••" onChange={() => clearFieldError('password')} />
+          <input id="password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="new-password" required minLength={8} className={styles.input} placeholder="••••••••" onChange={e => { setPasswordValue(e.target.value); clearFieldError('password'); }} />
           <button type="button" className={styles.eyeBtn} onClick={() => setShowPassword(prev => !prev)} aria-label={showPassword ? 'Hide password' : 'Show password'}>
             {showPassword ? (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
@@ -111,6 +140,7 @@ export function RegisterForm() {
             )}
           </button>
         </div>
+        {activeRequirement && <p className={styles.passwordRequirement}>{activeRequirement.label}</p>}
         {fieldErrors.password && <p className={styles.fieldError}>{fieldErrors.password}</p>}
         <Link href="/auth/forgot-password" className={styles.forgotLink}>Forgot password?</Link>
       </div>
@@ -120,6 +150,8 @@ export function RegisterForm() {
       <button type="submit" className={styles.submitBtn} disabled={loading} aria-busy={loading}>
         {loading ? <><span className={styles.spinner} /> Creating account…</> : 'Create account'} <span style={{fontSize:20}}>→</span>
       </button>
+
+      <Link href="/" className={styles.backLink}>← Back to home</Link>
 
       <p className={styles.switchPrompt}>
         Already have an account?{' '}

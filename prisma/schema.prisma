@@ -22,6 +22,8 @@ model User {
    goals                  String?
    onboardingCompleted    Boolean   @default(false)
    createdAt              DateTime  @default(now())
+   resetToken             String?   @unique
+   resetTokenExpires      DateTime?
 
    accounts               Account[]
    sessions               Session[]
