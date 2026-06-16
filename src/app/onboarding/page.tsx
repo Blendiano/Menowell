@@ -34,6 +34,7 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(0)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
 
   const [dateOfBirth, setDateOfBirth] = useState('')
   const [menstrualStatus, setMenstrualStatus] = useState('')
@@ -45,12 +46,18 @@ export default function OnboardingPage() {
     setSelectedSymptoms(prev =>
       prev.includes(symptom) ? prev.filter(s => s !== symptom) : [...prev, symptom]
     )
+    setFieldErrors(prev => ({ ...prev, symptoms: '' }))
   }
 
   function toggleGoal(goal: string) {
     setGoals(prev =>
       prev.includes(goal) ? prev.filter(g => g !== goal) : [...prev, goal]
     )
+    setFieldErrors(prev => ({ ...prev, goals: '' }))
+  }
+
+  function clearFieldError(field: string) {
+    setFieldErrors(prev => ({ ...prev, [field]: '' }))
   }
 
   function canProceed(): boolean {
@@ -63,6 +70,35 @@ export default function OnboardingPage() {
   }
 
   async function handleNext() {
+    setFieldErrors({})
+
+    if (step === 0) {
+      const errors: Record<string, string> = {}
+      if (!dateOfBirth.trim()) errors.dob = 'This field must not be empty'
+      if (!menstrualStatus) errors.menstrual = 'This field must not be empty'
+      if (Object.keys(errors).length > 0) {
+        setFieldErrors(errors)
+        return
+      }
+    }
+
+    if (step === 1) {
+      if (selectedSymptoms.length === 0) {
+        setFieldErrors({ symptoms: 'This field must not be empty' })
+        return
+      }
+    }
+
+    if (step === 2) {
+      const errors: Record<string, string> = {}
+      if (!symptomSeverity) errors.severity = 'This field must not be empty'
+      if (goals.length === 0) errors.goals = 'This field must not be empty'
+      if (Object.keys(errors).length > 0) {
+        setFieldErrors(errors)
+        return
+      }
+    }
+
     if (step < 3) {
       setStep(step + 1)
       return
@@ -112,18 +148,20 @@ export default function OnboardingPage() {
             <div className={styles.form}>
               <div className={styles.field}>
                 <label htmlFor="dob" className={styles.label}>Date of birth</label>
-                <input id="dob" type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className={styles.input} required />
+                <input id="dob" type="date" value={dateOfBirth} onChange={e => { setDateOfBirth(e.target.value); clearFieldError('dob'); }} className={styles.input} required />
+                {fieldErrors.dob && <p className={styles.errorMsg}>{fieldErrors.dob}</p>}
               </div>
               <div className={styles.field}>
                 <label className={styles.label}>Which best describes you?</label>
                 <div className={styles.radioGroup}>
                   {MENSTRUAL_OPTIONS.map(opt => (
                     <label key={opt.value} className={`${styles.radioLabel} ${menstrualStatus === opt.value ? styles.radioLabelSelected : ''}`}>
-                      <input type="radio" name="menstrualStatus" value={opt.value} checked={menstrualStatus === opt.value} onChange={e => setMenstrualStatus(e.target.value)} className={styles.radioInput} />
+                      <input type="radio" name="menstrualStatus" value={opt.value} checked={menstrualStatus === opt.value} onChange={e => { setMenstrualStatus(e.target.value); clearFieldError('menstrual'); }} className={styles.radioInput} />
                       {opt.label}
                     </label>
                   ))}
                 </div>
+                {fieldErrors.menstrual && <p className={styles.errorMsg}>{fieldErrors.menstrual}</p>}
               </div>
             </div>
           </section>
@@ -141,6 +179,7 @@ export default function OnboardingPage() {
                 </label>
               ))}
             </div>
+            {fieldErrors.symptoms && <p className={styles.errorMsg}>{fieldErrors.symptoms}</p>}
           </section>
         )}
 
@@ -154,11 +193,12 @@ export default function OnboardingPage() {
                 <div className={styles.radioGroup}>
                   {SEVERITY_OPTIONS.map(opt => (
                     <label key={opt.value} className={`${styles.radioLabel} ${symptomSeverity === opt.value ? styles.radioLabelSelected : ''}`}>
-                      <input type="radio" name="severity" value={opt.value} checked={symptomSeverity === opt.value} onChange={e => setSymptomSeverity(e.target.value)} className={styles.radioInput} />
+                      <input type="radio" name="severity" value={opt.value} checked={symptomSeverity === opt.value} onChange={e => { setSymptomSeverity(e.target.value); clearFieldError('severity'); }} className={styles.radioInput} />
                       {opt.label}
                     </label>
                   ))}
                 </div>
+                {fieldErrors.severity && <p className={styles.errorMsg}>{fieldErrors.severity}</p>}
               </div>
               <div className={styles.field}>
                 <label className={styles.label}>What are your goals?</label>
@@ -170,6 +210,7 @@ export default function OnboardingPage() {
                     </label>
                   ))}
                 </div>
+                {fieldErrors.goals && <p className={styles.errorMsg}>{fieldErrors.goals}</p>}
               </div>
             </div>
           </section>

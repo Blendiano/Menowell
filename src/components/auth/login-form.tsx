@@ -85,7 +85,7 @@ export function LoginForm({ registered }: TLoginFormProps) {
   return (
     <>
       {error && <div className={styles.errorSnackbar} role="alert">{error}</div>}
-      <form onSubmit={handleSubmit} className={styles.form} noValidate>
+      <form onSubmit={handleSubmit} className={styles.form} noValidate style={{marginTop:16}}>
       <div className={styles.field}>
         <label htmlFor="email" className={styles.label}>Enter email address</label>
         <input id="email" name="email" type="email" autoComplete="email" required className={styles.input} placeholder="you@example.com" onChange={() => clearFieldError('email')} onFocus={() => setError(null)} />
@@ -93,12 +93,7 @@ export function LoginForm({ registered }: TLoginFormProps) {
       </div>
 
       <div className={styles.field}>
-        <div className={styles.labelRow}>
-          <label htmlFor="password" className={styles.label}>Enter password</label>
-          <Link href="/auth/forgot-password" className={styles.forgotLink}>
-            Forgot password?
-          </Link>
-        </div>
+        <label htmlFor="password" className={styles.label}>Enter password</label>
         <div className={styles.passwordWrapper}>
           <input id="password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required minLength={8} className={styles.input} placeholder="••••••••" onChange={e => { setPasswordValue(e.target.value); clearFieldError('password'); }} onFocus={() => setError(null)} />
           <button type="button" className={styles.eyeBtn} onClick={() => setShowPassword(prev => !prev)} aria-label={showPassword ? 'Hide password' : 'Show password'}>
@@ -109,6 +104,7 @@ export function LoginForm({ registered }: TLoginFormProps) {
             )}
           </button>
         </div>
+        <Link href="/auth/forgot-password" className={styles.forgotLink}>Forgot password?</Link>
         {activeRequirement && <p className={styles.passwordRequirement}>{activeRequirement.label}</p>}
         {fieldErrors.password && <p className={styles.fieldError}>{fieldErrors.password}</p>}
       </div>

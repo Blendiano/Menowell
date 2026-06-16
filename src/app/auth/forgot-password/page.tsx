@@ -7,29 +7,30 @@ import styles from '@/components/auth/auth-card.module.css'
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
   const [sent, setSent] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [emailError, setEmailError] = useState('')
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setError(null)
+    setEmailError('')
+
+    if (!email.trim()) {
+      setEmailError('This field cannot be empty')
+      return
+    }
+
     setLoading(true)
 
     try {
-      const res = await fetch('/api/auth/forgot-password', {
+      await fetch('/api/auth/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       })
-      const data = await res.json()
-      if (!res.ok) {
-        setError(data.error ?? 'Something went wrong.')
-      } else {
-        setSent(true)
-      }
     } catch {
-      setError('Something went wrong. Please try again.')
+      // Silently ignore — always show success for security
     } finally {
+      setSent(true)
       setLoading(false)
     }
   }
@@ -40,19 +41,23 @@ export default function ForgotPasswordPage() {
         <h1 className={styles.brand}>Menowell</h1>
       </div>
       <div className={styles.card}>
-        <h2 className={styles.formHeading}>Reset your password</h2>
-
         {sent ? (
-          <>
-            <p className={styles.subtitle}>
-              If an account with that email exists, we&apos;ve sent a reset link. Check your inbox.
+          <div className={styles.successState}>
+            <svg className={styles.successIcon} width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--sys-color-primary-primary,#690cb0)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <h2 className={styles.successHeading}>Check your email</h2>
+            <p className={styles.successDesc}>
+              If an account exists for this email address, we&apos;ve sent a password reset link. Please check your inbox and spam folder.
             </p>
-            <Link href="/auth" className={styles.submitBtn} style={{textAlign:'center',textDecoration:'none'}}>
+            <Link href="/auth" className={styles.submitBtn}>
               Back to sign in
             </Link>
-          </>
+          </div>
         ) : (
           <form onSubmit={handleSubmit} className={styles.form} noValidate>
+            <h2 className={styles.formHeading}>Reset your password</h2>
             <div className={styles.field}>
               <label htmlFor="email" className={styles.label}>Enter your email address</label>
               <input
@@ -64,11 +69,10 @@ export default function ForgotPasswordPage() {
                 className={styles.input}
                 placeholder="you@example.com"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={e => { setEmail(e.target.value); if (emailError) setEmailError(''); }}
               />
+              {emailError && <p className={styles.fieldError}>{emailError}</p>}
             </div>
-
-            {error && <p className={styles.errorMsg} role="alert">{error}</p>}
 
             <button type="submit" className={styles.submitBtn} disabled={loading} aria-busy={loading}>
               {loading ? <><span className={styles.spinner} /> Sending…</> : 'Send reset link'}

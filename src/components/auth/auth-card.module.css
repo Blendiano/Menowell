@@ -1,17 +1,17 @@
 .root { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:24px 16px; background:var(--sys-color-add-on-surface-colors-background,#f7fafd); }
-.card { background:var(--sys-color-add-on-surface-colors-background,#f7fafd); border:none; border-radius:16px; padding:40px 36px; width:100%; max-width:420px; box-shadow:0 4px 24px rgba(15,39,62,0.08); }
-.header { text-align:center; margin-bottom:16px; }
+.card { background:var(--sys-color-add-on-surface-colors-background,#f7fafd); border:none; border-radius:16px; padding:36px 36px 40px; width:100%; max-width:420px; box-shadow:0 4px 24px rgba(15,39,62,0.08); }
+.header { text-align:center; margin-bottom:0; }
 .brand { font-size:20px; font-weight:700; color:var(--sys-color-primary-primary,#690cb0); }
-.formHeading { font-size:24px; font-weight:700; text-align:left; color:var(--sys-color-surface-on-surface,#0f273e); margin-bottom:4px; }
+.formHeading { font-size:24px; font-weight:700; text-align:left; color:var(--sys-color-surface-on-surface,#0f273e); margin-bottom:0; }
 .subtitle { font-size:14px; font-weight:500; text-align:left; margin-bottom:32px; color:var(--sys-color-surface-on-surface-variant,#334e68); }
-.form { display:flex; flex-direction:column; gap:24px; }
-.field { display:flex; flex-direction:column; gap:6px; }
+.form { display:flex; flex-direction:column; gap:8px; }
+.field { display:flex; flex-direction:column; gap:0; }
 .labelRow { display:flex; justify-content:space-between; align-items:center; }
-.label { font-size:14px; font-weight:500; color:var(--sys-color-surface-on-surface,#0f273e); transition:color 200ms ease-out; }
+.label { font-size:var(--sys-typography-text-md-medium-font-size,16px); font-weight:var(--sys-typography-text-md-medium-font-weight,500); color:var(--sys-color-surface-on-surface,#0f273e); transition:color 200ms ease-out; }
 .field:has(.input:not(:placeholder-shown)) .label { color:var(--sys-color-secondary-secondary-container,#e8def8); }
 .hint { font-weight:400; color:var(--sys-color-surface-on-surface-variant,#334e68); }
-.forgotLink { font-size:13px; color:var(--sys-color-primary-primary,#690cb0); text-align:right; display:block; }
-.input { border:1.5px solid var(--sys-color-outline-outline-variant,#bbccdd); border-radius:8px; padding:12px 14px; font-size:15px; font-family:inherit; color:var(--sys-color-add-on-surface-color-on-background,#0f273e); background:var(--sys-color-surface-surface,#ffffff); transition:border-color 200ms ease-out, box-shadow 200ms ease-out, background 200ms ease-out, color 200ms ease-out; outline:none; width:100%; box-shadow:0 4px 16px rgba(0,0,0,0.10); }
+.forgotLink { font-size:var(--sys-typography-text-md-medium-font-size,16px); color:var(--sys-color-primary-primary,#690cb0); text-align:right; display:block; }
+.input { border:1.5px solid var(--sys-color-outline-outline-variant,#bbccdd); border-radius:12px; padding:12px 24px; font-size:15px; font-family:inherit; color:var(--sys-color-add-on-surface-color-on-background,#0f273e); background:var(--sys-color-surface-surface,#ffffff); transition:border-color 200ms ease-out, box-shadow 200ms ease-out, background 200ms ease-out, color 200ms ease-out; outline:none; width:100%; box-shadow:0 4px 16px rgba(0,0,0,0.10); }
 .input:hover:not(:focus-visible) { border-color:var(--sys-color-outline-outline,#8899aa); }
 .input:not(:placeholder-shown) { border-color:var(--sys-color-primary-primary,#690cb0); background:var(--sys-color-secondary-secondary-container,#e8def8); }
 .input:focus-visible,
@@ -28,12 +28,16 @@
 .passwordWrapper { position:relative; }
 .eyeBtn { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:var(--sys-color-add-on-surface-color-on-background,#0f273e); padding:0; display:flex; align-items:center; transition:color 200ms ease-out; }
 .field:has(#password:focus) .eyeBtn { color:var(--sys-color-primary-on-primary,#ffffff); }
-.submitBtn { background:var(--sys-color-primary-primary,#690cb0); color:var(--sys-color-primary-on-primary,#ffffff); border:none; border-radius:9999px; padding:14px; font-size:16px; font-weight:600; font-family:inherit; cursor:pointer; transition:opacity 200ms ease-out; margin-top:4px; display:inline-flex; align-items:center; justify-content:center; gap:8px; }
+.submitBtn { background:var(--sys-color-primary-primary,#690cb0); color:var(--sys-color-primary-on-primary,#ffffff); border:none; border-radius:12px; padding:12px 24px; font-size:16px; font-weight:600; font-family:inherit; cursor:pointer; transition:opacity 200ms ease-out; margin-top:16px; display:inline-flex; align-items:center; justify-content:center; gap:8px; }
 .submitBtn:hover:not(:disabled) { opacity:0.88; }
 .submitBtn:disabled { opacity:0.6; cursor:not-allowed; }
 .spinner { width:18px; height:18px; border:2px solid var(--sys-color-primary-on-primary,#ffffff); border-top-color:transparent; border-radius:50%; animation:spin 0.6s linear infinite; display:inline-block; }
 @keyframes spin { to { transform:rotate(360deg); } }
-.switchPrompt { text-align:center; margin-top:24px; font-size:14px; color:var(--sys-color-surface-on-surface-variant,#334e68); }
+.successState { display:flex; flex-direction:column; align-items:center; text-align:center; }
+.successIcon { margin-bottom:16px; }
+.successHeading { font-size:24px; font-weight:700; color:var(--sys-color-surface-on-surface,#0f273e); margin-bottom:0; }
+.successDesc { font-size:14px; font-weight:500; color:var(--sys-color-surface-on-surface-variant,#334e68); margin-bottom:32px; line-height:1.5; }
+.switchPrompt { text-align:center; margin-top:12px; font-size:14px; color:var(--sys-color-surface-on-surface-variant,#334e68); }
 .switchLink { color:var(--sys-color-primary-primary,#690cb0); font-weight:600; }
-.backLink { font-size:14px; color:var(--sys-color-surface-on-surface-variant,#334e68); text-align:center; display:block; text-decoration:none; }
+.backLink { font-size:14px; color:var(--sys-color-surface-on-surface-variant,#334e68); text-align:center; display:block; text-decoration:none; margin-top:4px; }
 .backLink:hover { color:var(--sys-color-primary-primary,#690cb0); }

@@ -142,7 +142,6 @@ export function RegisterForm() {
         </div>
         {activeRequirement && <p className={styles.passwordRequirement}>{activeRequirement.label}</p>}
         {fieldErrors.password && <p className={styles.fieldError}>{fieldErrors.password}</p>}
-        <Link href="/auth/forgot-password" className={styles.forgotLink}>Forgot password?</Link>
       </div>
 
       {error && <p className={styles.errorMsg} role="alert">{error}</p>}

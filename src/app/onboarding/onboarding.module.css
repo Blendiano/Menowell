@@ -1,6 +1,6 @@
 .root { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:24px 16px; background:var(--sys-color-add-on-surface-colors-background,#f7fafd); }
-.card { background:var(--sys-color-surface-surface,#ffffff); border-radius:16px; padding:40px 36px; width:100%; max-width:520px; box-shadow:0 4px 24px rgba(15,39,62,0.08); }
-.header { text-align:center; margin-bottom:24px; }
+.card { background:var(--sys-color-surface-surface,#ffffff); border-radius:16px; padding:36px 36px 40px; width:100%; max-width:520px; box-shadow:0 4px 24px rgba(15,39,62,0.08); }
+.header { text-align:center; margin-bottom:0; }
 .brand { font-size:20px; font-weight:700; color:var(--sys-color-primary-primary,#690cb0); margin-bottom:4px; }
 .steps { display:flex; justify-content:center; gap:8px; margin-bottom:32px; }
 .stepDot { width:8px; height:8px; border-radius:50%; background:var(--sys-color-outline-outline-variant,#bbccdd); transition:background 200ms; }

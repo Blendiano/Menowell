@@ -65,8 +65,8 @@
 
 .input {
   border: 1.5px solid var(--sys-color-outline-outline-variant, #bbccdd);
-  border-radius: 8px;
-  padding: 12px 14px;
+  border-radius: 12px;
+  padding: 12px 24px;
   font-size: 15px;
   font-family: inherit;
   color: var(--sys-color-surface-on-surface, #0f273e);
