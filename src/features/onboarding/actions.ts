@@ -11,6 +11,7 @@ const OnboardingSchema = z.object({
   selectedSymptoms: z.array(z.string()).min(1, 'Select at least one symptom'),
   symptomSeverity: z.enum(['MILD', 'MODERATE', 'SEVERE']),
   goals: z.array(z.string()).min(1, 'Select at least one goal'),
+  profileImage: z.string().optional(),
 })
 
 export type TOnboardingInput = z.infer<typeof OnboardingSchema>
@@ -31,6 +32,7 @@ export async function saveOnboarding(input: unknown) {
         selectedSymptoms: JSON.stringify(parsed.data.selectedSymptoms),
         symptomSeverity: parsed.data.symptomSeverity,
         goals: JSON.stringify(parsed.data.goals),
+        image: parsed.data.profileImage ?? null,
         onboardingCompleted: true,
       },
     })

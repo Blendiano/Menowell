@@ -36,3 +36,7 @@
 .btnSecondary { display:inline-flex; align-items:center; justify-content:center; padding:12px 28px; border-radius:9999px; font-size:15px; font-weight:600; font-family:inherit; background:transparent; color:var(--sys-color-primary-primary,#690cb0); border:1.5px solid var(--sys-color-primary-primary,#690cb0); cursor:pointer; transition:background 200ms; }
 .btnSecondary:hover { background:var(--sys-color-primary-primary-container,#edd9fc); }
 .errorMsg { font-size:13px; color:var(--sys-color-error-error,#f01b1f); margin-top:2px; }
+
+.overlay { position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+.confetti { position:absolute; width:10px; height:10px; border-radius:2px; animation:confettiFall linear forwards; }
+@keyframes confettiFall { 0% { opacity:1; transform:translateY(0) rotate(0deg) scale(1); } 100% { opacity:0; transform:translateY(100vh) rotate(720deg) scale(0.5); } }

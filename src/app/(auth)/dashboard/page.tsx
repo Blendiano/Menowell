@@ -1,6 +1,7 @@
 import { getCurrentUser } from '@/lib/user'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getRecentSymptomSummary } from '@/services/symptom-service'
 import { getStage } from '@/services/user-service'
 import { getLatestInsight } from '@/services/insight-service'
@@ -41,8 +42,24 @@ export default async function DashboardPage() {
   return (
     <main className={styles.root}>
       <header className={styles.header}>
-        <h1 className={styles.greeting}>Hello, {firstName} 👋</h1>
-        <p className={styles.subGreeting}>Here&apos;s your wellness overview for today.</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          {user.image ? (
+            <div style={{ width: 56, height: 56, borderRadius: '50%', overflow: 'hidden', position: 'relative', flexShrink: 0, border: '2px solid #edd9fc' }}>
+              <Image src={user.image} alt="" fill style={{ objectFit: 'cover' }} />
+            </div>
+          ) : (
+            <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#f0f5fa', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '2px solid #edd9fc' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#627d98" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </div>
+          )}
+          <div>
+            <h1 className={styles.greeting}>Hello, {firstName} 👋</h1>
+            <p className={styles.subGreeting}>Here&apos;s your wellness overview for today.</p>
+          </div>
+        </div>
       </header>
 
       <div className={styles.grid}>

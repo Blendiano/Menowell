@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { saveOnboarding } from '@/features/onboarding/actions'
 import styles from './onboarding.module.css'
 
@@ -27,7 +28,7 @@ const SEVERITY_OPTIONS = [
 
 const GOAL_OPTIONS = [
   'Track symptoms', 'Understand my body better', 'Find community support',
-  'Get personalized insights', 'Learn about menopause',
+  'Get personalized insights', 'Learn about menopause', 'Improve sleep',
 ] as const
 
 export default function OnboardingPage() {
@@ -42,6 +43,10 @@ export default function OnboardingPage() {
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([])
   const [symptomSeverity, setSymptomSeverity] = useState('')
   const [goals, setGoals] = useState<string[]>([])
+  const [profileImage, setProfileImage] = useState<File | null>(null)
+  const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null)
+  const [showCelebration, setShowCelebration] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   function toggleSymptom(symptom: string) {
     if (symptom === 'No symptoms yet') {
@@ -111,8 +116,26 @@ export default function OnboardingPage() {
       return
     }
 
+    setShowCelebration(true)
     setLoading(true)
     setError(null)
+
+    await new Promise(r => setTimeout(r, 2000))
+    setShowCelebration(false)
+
+    let imageUrl: string | undefined
+    if (profileImage) {
+      const formData = new FormData()
+      formData.append('file', profileImage)
+      const uploadRes = await fetch('/api/upload/avatar', { method: 'POST', body: formData })
+      const uploadData = await uploadRes.json()
+      if (uploadData.error) {
+        setError(uploadData.error)
+        setLoading(false)
+        return
+      }
+      imageUrl = uploadData.data.url
+    }
 
     const result = await saveOnboarding({
       dateOfBirth,
@@ -120,6 +143,7 @@ export default function OnboardingPage() {
       selectedSymptoms,
       symptomSeverity,
       goals,
+      profileImage: imageUrl,
     })
 
     setLoading(false)
@@ -231,16 +255,71 @@ export default function OnboardingPage() {
 
         {step === 3 && (
           <section>
-            <h2 className={styles.stepHeading}>You&apos;re all set!</h2>
+            <h2 className={styles.stepHeading}>You&apos;re all set! 🎉</h2>
             <p className={styles.stepDesc}>
-              We&apos;ll use this information to personalize your insights, track what matters to you, and connect you with relevant resources.
+              We&apos;ll personalize Menowell to help you better understand your symptoms and journey.
             </p>
-            <div style={{ background: '#f7fafd', borderRadius: 10, padding: 16, marginBottom: 16, fontSize: 14, color: '#334e68', lineHeight: 1.6 }}>
-              <strong style={{ color: '#0f273e' }}>Your selections:</strong><br />
-              Menstrual status: {MENSTRUAL_OPTIONS.find(o => o.value === menstrualStatus)?.label}<br />
-              Symptoms: {selectedSymptoms.length} selected<br />
-              Severity: {SEVERITY_OPTIONS.find(o => o.value === symptomSeverity)?.label ?? symptomSeverity}<br />
-              Goals: {goals.join(', ')}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 20 }}>
+              <div
+                onClick={() => fileInputRef.current?.click()}
+                style={{
+                  width: 88, height: 88, borderRadius: '50%', overflow: 'hidden',
+                  background: '#f0f5fa', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  border: '2px dashed #bbccdd', transition: 'border-color 200ms', position: 'relative',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = '#690cb0')}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = '#bbccdd')}
+              >
+                {profileImagePreview ? (
+                  <Image src={profileImagePreview} alt="Profile" fill style={{ objectFit: 'cover' }} />
+                ) : (
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#627d98" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                )}
+              </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                style={{ display: 'none' }}
+                onChange={e => {
+                  const file = e.target.files?.[0]
+                  if (file) {
+                    setProfileImage(file)
+                    setProfileImagePreview(URL.createObjectURL(file))
+                  }
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                style={{ background: 'none', border: 'none', color: '#690cb0', fontSize: 13, fontWeight: 600, cursor: 'pointer', marginTop: 8 }}
+              >
+                {profileImagePreview ? 'Change photo' : 'Add a profile photo'}
+              </button>
+            </div>
+            <div style={{ background: '#ffffff', borderRadius: 16, padding: 24, marginBottom: 16, boxShadow: '0 2px 12px rgba(15,39,62,0.08)', border: '1px solid #e8f0f8' }}>
+              <div style={{ fontSize: 16, fontWeight: 700, color: '#0f273e', marginBottom: 16 }}>Your profile</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid #f0f5fa' }}>
+                  <span style={{ fontSize: 14, color: '#627d98' }}>Stage</span>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: '#0f273e' }}>{MENSTRUAL_OPTIONS.find(o => o.value === menstrualStatus)?.label}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid #f0f5fa' }}>
+                  <span style={{ fontSize: 14, color: '#627d98' }}>Symptoms</span>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: '#0f273e' }}>{selectedSymptoms.length} selected</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid #f0f5fa' }}>
+                  <span style={{ fontSize: 14, color: '#627d98' }}>Impact</span>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: '#0f273e' }}>{SEVERITY_OPTIONS.find(o => o.value === symptomSeverity)?.label ?? symptomSeverity}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ fontSize: 14, color: '#627d98' }}>Goal</span>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: '#0f273e', textAlign: 'right' }}>Track symptoms, get personalized insights</span>
+                </div>
+              </div>
             </div>
           </section>
         )}
@@ -254,10 +333,31 @@ export default function OnboardingPage() {
             </button>
           ) : <div />}
           <button type="button" className={styles.btnPrimary} disabled={!canProceed() || loading} onClick={handleNext}>
-            {loading ? 'Saving…' : step === totalSteps - 1 ? 'Get Started' : 'Continue'}
+            {loading ? 'Saving…' : step === totalSteps - 1 ? 'Get started & go to dashboard' : 'Continue'}
           </button>
         </div>
       </div>
+      {showCelebration && (
+        <div className={styles.overlay}>
+          {Array.from({ length: 60 }).map((_, i) => (
+            <div
+              key={i}
+              className={styles.confetti}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * -20}%`,
+                background: ['#690cb0', '#edd9fc', '#f59e0b', '#10b981', '#3b82f6', '#ef4444', '#ec4899'][i % 7],
+                width: `${6 + Math.random() * 8}px`,
+                height: `${6 + Math.random() * 8}px`,
+                borderRadius: Math.random() > 0.5 ? '50%' : '2px',
+                animationDuration: `${2 + Math.random() * 2}s`,
+                animationDelay: `${Math.random() * 0.5}s`,
+              }}
+            />
+          ))}
+          <div style={{ fontSize: 48, animation: 'bounce 0.6s ease infinite', position: 'relative', zIndex: 1 }}>🎉</div>
+        </div>
+      )}
     </main>
   )
 }
