@@ -15,13 +15,14 @@ const MENSTRUAL_OPTIONS = [
 const SYMPTOM_OPTIONS = [
   'Hot flashes / night sweats', 'Mood changes / irritability', 'Sleep difficulties',
   'Weight changes', 'Low libido', 'Vaginal dryness', 'Brain fog / difficulty concentrating',
-  'Fatigue', 'Joint pain', 'Anxiety',
+  'Fatigue', 'Joint pain', 'Anxiety', 'Headaches',
+  'No symptoms currently',
 ] as const
 
 const SEVERITY_OPTIONS = [
-  { value: 'MILD', label: 'Mild — noticeable but manageable' },
-  { value: 'MODERATE', label: 'Moderate — affects my daily life' },
-  { value: 'SEVERE', label: 'Severe — difficult to cope with' },
+  { value: 'MILD', label: 'Mild — Manageable most days' },
+  { value: 'MODERATE', label: 'Moderate — Often affects daily activities' },
+  { value: 'SEVERE', label: 'Severe — Frequently impacts quality of life' },
 ] as const
 
 const GOAL_OPTIONS = [
@@ -43,9 +44,15 @@ export default function OnboardingPage() {
   const [goals, setGoals] = useState<string[]>([])
 
   function toggleSymptom(symptom: string) {
-    setSelectedSymptoms(prev =>
-      prev.includes(symptom) ? prev.filter(s => s !== symptom) : [...prev, symptom]
-    )
+    if (symptom === 'No symptoms yet') {
+      setSelectedSymptoms(prev => prev.includes(symptom) ? [] : ['No symptoms yet'])
+    } else {
+      setSelectedSymptoms(prev =>
+        prev.includes(symptom)
+          ? prev.filter(s => s !== symptom)
+          : [...prev.filter(s => s !== 'No symptoms yet'), symptom]
+      )
+    }
     setFieldErrors(prev => ({ ...prev, symptoms: '' }))
   }
 
@@ -134,10 +141,14 @@ export default function OnboardingPage() {
       <div className={styles.card}>
         <div className={styles.steps}>
           {Array.from({ length: totalSteps }).map((_, i) => (
-            <div
-              key={i}
-              className={`${styles.stepDot} ${i === step ? styles.stepDotActive : ''} ${i < step ? styles.stepDotDone : ''}`}
-            />
+            <div key={i} className={styles.stepItem}>
+              <div
+                className={`${styles.stepDot} ${i === step ? styles.stepDotActive : ''} ${i < step ? styles.stepDotDone : ''}`}
+              >
+                {i + 1}
+              </div>
+              {i < totalSteps - 1 && <span className={styles.stepArrow}>→</span>}
+            </div>
           ))}
         </div>
 
@@ -148,11 +159,12 @@ export default function OnboardingPage() {
             <div className={styles.form}>
               <div className={styles.field}>
                 <label htmlFor="dob" className={styles.label}>Date of birth</label>
-                <input id="dob" type="date" value={dateOfBirth} onChange={e => { setDateOfBirth(e.target.value); clearFieldError('dob'); }} className={styles.input} required />
+                <p className={styles.fieldDesc}>Used to personalize your menopause insights.</p>
+                <input id="dob" type="text" inputMode="numeric" placeholder="dd/mm/yyyy" value={dateOfBirth} onChange={e => { setDateOfBirth(e.target.value); clearFieldError('dob'); }} className={styles.input} required autoFocus />
                 {fieldErrors.dob && <p className={styles.errorMsg}>{fieldErrors.dob}</p>}
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>Which best describes you?</label>
+                <label className={styles.label}>Which best describes your current stage?</label>
                 <div className={styles.radioGroup}>
                   {MENSTRUAL_OPTIONS.map(opt => (
                     <label key={opt.value} className={`${styles.radioLabel} ${menstrualStatus === opt.value ? styles.radioLabelSelected : ''}`}>
@@ -170,7 +182,7 @@ export default function OnboardingPage() {
         {step === 1 && (
           <section>
             <h2 className={styles.stepHeading}>Your symptoms</h2>
-            <p className={styles.stepDesc}>Select any symptoms you&apos;re currently experiencing.</p>
+            <p className={styles.stepDesc}>Select all symptoms you&apos;re currently experiencing.</p>
             <div className={styles.checkboxGroup}>
               {SYMPTOM_OPTIONS.map(symptom => (
                 <label key={symptom} className={`${styles.checkboxLabel} ${selectedSymptoms.includes(symptom) ? styles.checkboxSelected : ''}`}>
@@ -202,6 +214,7 @@ export default function OnboardingPage() {
               </div>
               <div className={styles.field}>
                 <label className={styles.label}>What are your goals?</label>
+                <p className={styles.fieldDesc}>select all that apply.</p>
                 <div className={styles.checkboxGroup}>
                   {GOAL_OPTIONS.map(goal => (
                     <label key={goal} className={`${styles.checkboxLabel} ${goals.includes(goal) ? styles.checkboxSelected : ''}`}>

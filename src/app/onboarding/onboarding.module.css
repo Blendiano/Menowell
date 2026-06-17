@@ -2,15 +2,20 @@
 .card { background:var(--sys-color-surface-surface,#ffffff); border-radius:16px; padding:36px 36px 40px; width:100%; max-width:520px; box-shadow:0 4px 24px rgba(15,39,62,0.08); }
 .header { text-align:center; margin-bottom:0; }
 .brand { font-size:20px; font-weight:700; color:var(--sys-color-primary-primary,#690cb0); margin-bottom:4px; }
-.steps { display:flex; justify-content:center; gap:8px; margin-bottom:32px; }
-.stepDot { width:8px; height:8px; border-radius:50%; background:var(--sys-color-outline-outline-variant,#bbccdd); transition:background 200ms; }
-.stepDotActive { background:var(--sys-color-primary-primary,#690cb0); }
-.stepDotDone { background:var(--sys-color-primary-primary-container,#edd9fc); }
-.stepHeading { font-size:22px; font-weight:700; color:var(--sys-color-surface-on-surface,#0f273e); margin-bottom:8px; }
-.stepDesc { font-size:14px; color:var(--sys-color-surface-on-surface-variant,#334e68); margin-bottom:24px; }
+.steps { display:flex; justify-content:center; align-items:center; gap:0; margin-bottom:32px; }
+.stepItem { display:flex; align-items:center; gap:0; }
+.stepArrow { font-size:14px; color:var(--sys-color-outline-outline-variant,#bbccdd); margin:0 8px; }
+.stepDot { width:28px; height:28px; border-radius:50%; background:var(--sys-color-outline-outline-variant,#bbccdd); transition:background 200ms, border-color 200ms; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:var(--sys-color-surface-on-surface,#0f273e); }
+.stepDotActive { background:var(--sys-color-primary-primary,#690cb0); border:2px solid var(--sys-color-primary-primary,#690cb0); color:#fff; }
+.stepDotActive:hover { animation:bounce 0.4s ease; }
+@keyframes bounce { 0%,100% { transform:scale(1); } 50% { transform:scale(1.25); } }
+.stepDotDone { background:var(--sys-color-primary-primary-container,#edd9fc); border:2px solid var(--sys-color-primary-primary,#690cb0); color:var(--sys-color-primary-primary,#690cb0); }
+.stepHeading { font-size:22px; font-weight:700; color:var(--sys-color-surface-on-surface,#0f273e); margin-bottom:0; }
+.stepDesc { font-size:14px; color:var(--sys-color-surface-on-surface-variant,#334e68); margin-top:0; margin-bottom:24px; }
 .form { display:flex; flex-direction:column; gap:20px; }
-.field { display:flex; flex-direction:column; gap:6px; }
-.label { font-size:14px; font-weight:500; color:var(--sys-color-surface-on-surface,#0f273e); }
+.field { display:flex; flex-direction:column; gap:0; }
+.label { font-size:var(--sys-typography-text-lg-semibold-font-size, 18px); font-weight:var(--sys-typography-text-lg-semibold-font-weight, 600); line-height:var(--sys-typography-text-lg-semibold-line-height, 28px); letter-spacing:var(--sys-typography-text-lg-semibold-letter-spacing, 0px); color:var(--sys-color-surface-on-surface,#0f273e); }
+.fieldDesc { font-size:13px; color:var(--sys-color-surface-on-surface-variant,#334e68); margin:0 0 4px 0; }
 .input { border:1.5px solid var(--sys-color-outline-outline-variant,#bbccdd); border-radius:8px; padding:12px 14px; font-size:15px; font-family:inherit; color:var(--sys-color-surface-on-surface,#0f273e); background:var(--sys-color-surface-surface,#ffffff); transition:border-color 200ms ease-out; outline:none; width:100%; }
 .input:focus-visible { border-color:var(--sys-color-primary-primary,#690cb0); box-shadow:0 0 0 3px rgba(105,12,176,0.12); }
 .radioGroup { display:flex; flex-direction:column; gap:10px; }
@@ -19,9 +24,10 @@
 .radioLabelSelected { border-color:var(--sys-color-primary-primary,#690cb0); background:var(--sys-color-primary-primary-container,#edd9fc); }
 .radioInput { position:absolute; opacity:0; pointer-events:none; }
 .checkboxGroup { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-.checkboxLabel { display:flex; align-items:center; gap:8px; padding:10px 14px; border:1.5px solid var(--sys-color-outline-outline-variant,#bbccdd); border-radius:8px; cursor:pointer; transition:border-color 200ms, background 200ms; font-size:14px; color:var(--sys-color-surface-on-surface,#0f273e); }
+.checkboxLabel { display:flex; align-items:center; gap:8px; padding:10px 14px; border:1.5px solid var(--sys-color-outline-outline-variant,#bbccdd); border-radius:8px; cursor:pointer; transition:border-color 200ms, background 200ms; font-size:14px; color:var(--sys-color-surface-on-surface,#0f273e); position:relative; }
 .checkboxLabel:hover { border-color:var(--sys-color-primary-primary,#690cb0); }
-.checkboxSelected { border-color:var(--sys-color-primary-primary,#690cb0); background:var(--sys-color-primary-primary-container,#edd9fc); }
+.checkboxSelected { border-color:var(--sys-color-primary-primary,#690cb0); background:var(--sys-color-primary-primary-container,#edd9fc); font-weight:600; }
+.checkboxSelected::after { content:'✓'; position:absolute; right:12px; top:50%; transform:translateY(-50%); font-size:16px; font-weight:700; color:var(--sys-color-primary-primary,#690cb0); }
 .checkboxInput { position:absolute; opacity:0; pointer-events:none; }
 .actions { display:flex; justify-content:space-between; gap:12px; margin-top:8px; }
 .btnPrimary { display:inline-flex; align-items:center; justify-content:center; padding:12px 28px; border-radius:9999px; font-size:15px; font-weight:600; font-family:inherit; background:var(--sys-color-primary-primary,#690cb0); color:var(--sys-color-primary-on-primary,#ffffff); border:none; cursor:pointer; transition:opacity 200ms; }
