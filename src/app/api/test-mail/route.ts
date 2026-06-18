@@ -2,14 +2,32 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { sendMail } = await import("@/lib/mail");
     const { env } = await import("@/lib/env");
+    const nodemailer = require("nodemailer");
+    const { PrismaClient } = require("@prisma/client");
 
-    const info = await sendMail({
+    const prisma = new PrismaClient();
+    await prisma.$connect();
+
+    const transporter = nodemailer.createTransport({
+      host: env.SMTP_HOST,
+      port: env.SMTP_PORT,
+      secure: env.SMTP_PORT === 465,
+      auth: {
+        user: env.SMTP_USER,
+        pass: env.SMTP_PASS,
+      },
+    });
+
+    const info = await transporter.sendMail({
+      from: env.SMTP_FROM,
       to: env.SMTP_USER,
       subject: "Menowell SMTP Test",
       html: "<h1>SMTP Test</h1><p>If you receive this, SMTP is working!</p>",
     });
+
+    await prisma.$disconnect();
+
     return NextResponse.json({ success: true, messageId: info.messageId });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
