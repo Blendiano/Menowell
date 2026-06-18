@@ -21,7 +21,7 @@ export default async function EditProfilePage() {
     },
   })
 
-  if (!user) redirect('/profile')
+  if (!user) redirect('/dashboard/profile')
 
   return (
     <main className={styles.root}>

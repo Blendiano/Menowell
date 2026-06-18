@@ -76,12 +76,12 @@ export default async function DashboardPage() {
                   <> Average severity: {symptomSummary.averageSeverity}/10.</>
                 )}
               </p>
-              <Link href="/symptoms" className={styles.cardAction}>View all logs</Link>
+              <Link href="/dashboard/symptoms" className={styles.cardAction}>View all logs</Link>
             </>
           ) : (
             <>
               <p className={styles.cardBody}>You haven&apos;t logged any symptoms yet today.</p>
-              <Link href="/symptoms/new" className={styles.cardAction}>Log a symptom</Link>
+              <Link href="/dashboard/symptoms/new" className={styles.cardAction}>Log a symptom</Link>
             </>
           )}
         </section>
@@ -95,12 +95,12 @@ export default async function DashboardPage() {
                 <br />
                 Confidence: {Math.round(Number(stage.confidenceScore) * 100)}%
               </p>
-              <Link href="/profile" className={styles.cardAction}>View details</Link>
+              <Link href="/dashboard/profile" className={styles.cardAction}>View details</Link>
             </>
           ) : (
             <>
               <p className={styles.cardBody}>Complete your profile to identify your menopause stage.</p>
-              <Link href="/profile/edit" className={styles.cardAction}>Update profile</Link>
+              <Link href="/dashboard/profile/edit" className={styles.cardAction}>Update profile</Link>
             </>
           )}
         </section>
@@ -109,13 +109,13 @@ export default async function DashboardPage() {
           <h2 className={styles.cardTitle}>Latest Insight</h2>
           {latestInsight ? (
             <>
-              <p className={styles.cardBody}>{latestInsight.insightText}</p>
-              <Link href="/insights" className={styles.cardAction}>View all insights</Link>
+              <p className={styles.cardBodyFull}>{latestInsight.insightText}</p>
+              <Link href="/dashboard/insights" className={styles.cardAction}>View all insights</Link>
             </>
           ) : (
             <>
-              <p className={styles.cardBody}>Insights will appear here once you&apos;ve logged your first symptoms.</p>
-              <Link href="/insights" className={styles.cardAction}>View insights</Link>
+              <p className={styles.cardBodyFull}>Insights will appear here once you&apos;ve logged your first symptoms.</p>
+              <Link href="/dashboard/insights" className={styles.cardAction}>View insights</Link>
             </>
           )}
         </section>
@@ -123,7 +123,7 @@ export default async function DashboardPage() {
         <section className={styles.card} aria-label="Educational content">
           <h2 className={styles.cardTitle}>Learn</h2>
           <p className={styles.cardBody}>Explore articles and guides about menopause and wellness.</p>
-          <Link href="/learn" className={styles.cardAction}>Browse library</Link>
+          <Link href="/dashboard/learn" className={styles.cardAction}>Browse library</Link>
         </section>
       </div>
     </main>

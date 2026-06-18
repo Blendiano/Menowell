@@ -25,7 +25,7 @@ export default async function ProfilePage() {
     <main className={styles.root}>
       <div className={styles.header}>
         <h1 className={styles.title}>Your Profile</h1>
-        <Link href="/profile/edit" className={styles.editBtn}>Edit profile</Link>
+        <Link href="/dashboard/profile/edit" className={styles.editBtn}>Edit profile</Link>
       </div>
 
       <section className={styles.card}>

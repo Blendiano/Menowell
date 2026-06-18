@@ -24,14 +24,14 @@ export default async function CommunityPage() {
     <main className={styles.root}>
       <div className={styles.pageHeader}>
         <h1 className={styles.title}>Community</h1>
-        <Link href="/community/new" className={styles.newPostBtn}>+ New post</Link>
+        <Link href="/dashboard/community/new" className={styles.newPostBtn}>+ New post</Link>
       </div>
       <p className={styles.subtitle}>A safe space to share and support one another.</p>
 
       {posts.length === 0 ? (
         <div className={styles.empty}>
           <p>Be the first to start a conversation in the community.</p>
-          <Link href="/community/new" className={styles.newPostBtn}>Start a post</Link>
+          <Link href="/dashboard/community/new" className={styles.newPostBtn}>Start a post</Link>
         </div>
       ) : (
         <ul className={styles.list}>

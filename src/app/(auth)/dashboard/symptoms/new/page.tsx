@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { createSymptomLog } from '@/features/symptoms/actions'
 import styles from './new-symptom.module.css'
@@ -27,6 +27,11 @@ export default function NewSymptomPage() {
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
   const [severity, setSeverity] = useState(5)
+  const selectRef = useRef<HTMLSelectElement>(null)
+
+  useEffect(() => {
+    selectRef.current?.focus()
+  }, [])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -56,7 +61,7 @@ export default function NewSymptomPage() {
       <form onSubmit={handleSubmit} className={styles.form} noValidate>
         <div className={styles.field}>
           <label htmlFor="symptomName" className={styles.label}>Symptom <span aria-hidden>*</span></label>
-          <select id="symptomName" name="symptomName" required className={styles.select}>
+          <select id="symptomName" name="symptomName" required className={styles.select} ref={selectRef}>
             {SYMPTOMS.map((s) => (
               <option key={s.value} value={s.value}>{s.label}</option>
             ))}

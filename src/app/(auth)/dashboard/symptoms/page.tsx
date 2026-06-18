@@ -22,13 +22,13 @@ export default async function SymptomsPage() {
     <main className={styles.root}>
       <div className={styles.pageHeader}>
         <h1 className={styles.title}>Symptom Tracker</h1>
-        <Link href="/symptoms/new" className={styles.logBtn}>+ Log symptom</Link>
+        <Link href="/dashboard/symptoms/new" className={styles.logBtn}>+ Log symptom</Link>
       </div>
 
       {logs.length === 0 ? (
         <div className={styles.empty}>
           <p className={styles.emptyText}>Track your first symptom to start understanding your patterns.</p>
-          <Link href="/symptoms/new" className={styles.logBtn}>Log your first symptom</Link>
+          <Link href="/dashboard/symptoms/new" className={styles.logBtn}>Log your first symptom</Link>
         </div>
       ) : (
         <ul className={styles.list}>

@@ -300,24 +300,24 @@ export default function OnboardingPage() {
                 {profileImagePreview ? 'Change photo' : 'Add a profile photo'}
               </button>
             </div>
-            <div style={{ background: '#ffffff', borderRadius: 16, padding: 24, marginBottom: 16, boxShadow: '0 2px 12px rgba(15,39,62,0.08)', border: '1px solid #e8f0f8' }}>
-              <div style={{ fontSize: 16, fontWeight: 700, color: '#0f273e', marginBottom: 16 }}>Your profile</div>
+            <div style={{ background: '#0f273e', borderRadius: 16, padding: 24, marginBottom: 16, boxShadow: '0 4px 20px rgba(15,39,62,0.16)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <div style={{ fontSize: 16, fontWeight: 700, color: '#ffffff', marginBottom: 16 }}>Your profile</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid #f0f5fa' }}>
-                  <span style={{ fontSize: 14, color: '#627d98' }}>Stage</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: '#0f273e' }}>{MENSTRUAL_OPTIONS.find(o => o.value === menstrualStatus)?.label}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                  <span style={{ fontSize: 14, color: '#94a3b8' }}>Stage</span>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: '#ffffff' }}>{MENSTRUAL_OPTIONS.find(o => o.value === menstrualStatus)?.label}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid #f0f5fa' }}>
-                  <span style={{ fontSize: 14, color: '#627d98' }}>Symptoms</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: '#0f273e' }}>{selectedSymptoms.length} selected</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                  <span style={{ fontSize: 14, color: '#94a3b8' }}>Symptoms</span>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: '#ffffff' }}>{selectedSymptoms.length} selected</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid #f0f5fa' }}>
-                  <span style={{ fontSize: 14, color: '#627d98' }}>Impact</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: '#0f273e' }}>{SEVERITY_OPTIONS.find(o => o.value === symptomSeverity)?.label ?? symptomSeverity}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                  <span style={{ fontSize: 14, color: '#94a3b8' }}>Impact</span>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: '#ffffff' }}>{SEVERITY_OPTIONS.find(o => o.value === symptomSeverity)?.label ?? symptomSeverity}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: 14, color: '#627d98' }}>Goal</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: '#0f273e', textAlign: 'right' }}>Track symptoms, get personalized insights</span>
+                  <span style={{ fontSize: 14, color: '#94a3b8' }}>Goal</span>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: '#ffffff', textAlign: 'right' }}>Track symptoms, get personalized insights</span>
                 </div>
               </div>
             </div>
