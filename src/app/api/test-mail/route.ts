@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
-import { sendMail } from "@/lib/mail";
-import { env } from "@/lib/env";
 
-export async function GET() {
+export async function POST(req: Request) {
   try {
+    const { sendMail } = await import("@/lib/mail");
+    const { env } = await import("@/lib/env");
+
     const info = await sendMail({
       to: env.SMTP_USER,
       subject: "Menowell SMTP Test",
