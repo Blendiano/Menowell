@@ -3,25 +3,12 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getRecentSymptomSummary } from '@/services/symptom-service'
-import { getStage } from '@/services/user-service'
+import { getStage } from '@/services/stage-service'
 import { getLatestInsight } from '@/services/insight-service'
+import { SYMPTOM_LABELS, STAGE_LABELS } from '@/lib/constants'
 import styles from './dashboard.module.css'
 
 export const dynamic = 'force-dynamic'
-
-const SYMPTOM_LABELS: Record<string, string> = {
-  hot_flash: 'Hot Flash', night_sweat: 'Night Sweat', fatigue: 'Fatigue',
-  insomnia: 'Insomnia', anxiety: 'Anxiety', mood_swing: 'Mood Swing',
-  brain_fog: 'Brain Fog', joint_pain: 'Joint Pain', headache: 'Headache', other: 'Other',
-}
-
-const STAGE_LABELS: Record<string, string> = {
-  premenopausal: 'Premenopausal',
-  perimenopausal_early: 'Early Perimenopause',
-  perimenopausal_late: 'Late Perimenopause',
-  menopausal: 'Menopause',
-  postmenopausal: 'Postmenopause',
-}
 
 export default async function DashboardPage() {
   const user = await getCurrentUser()
@@ -31,11 +18,22 @@ export default async function DashboardPage() {
 
   const userId = user.id!
 
-  const [symptomSummary, stage, latestInsight] = await Promise.all([
-    getRecentSymptomSummary(userId),
-    getStage(userId),
-    getLatestInsight(userId),
-  ])
+  let symptomSummary: { total: number; averageSeverity: number; mostCommon: string | null; logs: unknown[] } = { total: 0, averageSeverity: 0, mostCommon: null, logs: [] }
+  let stage = null
+  let latestInsight = null
+
+  try {
+    const results = await Promise.all([
+      getRecentSymptomSummary(userId).catch(e => { console.error('symptom summary failed:', e); return null }),
+      getStage(userId).catch(e => { console.error('stage fetch failed:', e); return null }),
+      getLatestInsight(userId).catch(e => { console.error('insight fetch failed:', e); return null }),
+    ])
+    if (results[0]) symptomSummary = results[0]
+    if (results[1]) stage = results[1]
+    if (results[2]) latestInsight = results[2]
+  } catch (error) {
+    console.error('Dashboard data fetch error:', error)
+  }
 
   const firstName = user.name?.split(' ')[0] ?? 'there'
 
@@ -56,7 +54,7 @@ export default async function DashboardPage() {
             </div>
           )}
           <div>
-            <h1 className={styles.greeting}>Hello, {firstName} 👋</h1>
+            <h1 className={styles.greeting}>Welcome, {firstName} 👋</h1>
             <p className={styles.subGreeting}>Here&apos;s your wellness overview for today.</p>
           </div>
         </div>

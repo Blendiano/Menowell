@@ -2,6 +2,7 @@ import { getCurrentUser } from '@/lib/user'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TransitionLink } from '@/components/ui/transition-link'
+import { MarketingHeader } from '@/components/layout/marketing-header'
 import styles from './page.module.css'
 
 export default async function LandingPage() {
@@ -10,19 +11,7 @@ export default async function LandingPage() {
 
   return (
     <div id="page-root" className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.headerInner}>
-          <Link href="/" className={styles.logo}>Menowell</Link>
-          <nav className={styles.nav}>
-            <Link href="#features" className={styles.navLink}>Features</Link>
-            <Link href="#how-it-works" className={styles.navLink}>How It Works</Link>
-          </nav>
-          <div className={styles.headerActions}>
-            <TransitionLink href="/auth" className={styles.navOutline}>Log in</TransitionLink>
-            <TransitionLink href="/auth?mode=register" className={styles.navCta}>Get Started</TransitionLink>
-          </div>
-        </div>
-      </header>
+      <MarketingHeader />
 
       <section className={styles.hero}>
         <div className={styles.heroContent}>

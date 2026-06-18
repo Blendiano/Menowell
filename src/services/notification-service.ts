@@ -9,14 +9,14 @@ export async function getNotifications(userId: string, limit = 50) {
 }
 
 export async function markAsRead(notificationId: string, userId: string) {
-  return prisma.notification.updateMany({
+  await prisma.notification.updateMany({
     where: { id: notificationId, userId },
     data: { status: 'READ' },
   })
 }
 
 export async function markAllAsRead(userId: string) {
-  return prisma.notification.updateMany({
+  await prisma.notification.updateMany({
     where: { userId, status: 'UNREAD' },
     data: { status: 'READ' },
   })
@@ -25,6 +25,7 @@ export async function markAllAsRead(userId: string) {
 export async function createNotification(userId: string, message: string) {
   return prisma.notification.create({
     data: { userId, message },
+    select: { id: true },
   })
 }
 

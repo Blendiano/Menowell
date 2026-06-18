@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
+import { prisma } from '@/lib/prisma'
 
 export const CreateSymptomSchema = z.object({
   symptomName: z.enum([
@@ -12,20 +12,18 @@ export const CreateSymptomSchema = z.object({
 
 export type TCreateSymptomInput = z.infer<typeof CreateSymptomSchema>
 
-export const QuerySymptomSchema = z.object({
-  from: z.string().optional(),
-  to: z.string().optional(),
-  limit: z.coerce.number().int().min(1).max(100).default(50),
-})
+function getMostCommon(items: string[]): string | null {
+  if (items.length === 0) return null
+  const freq: Record<string, number> = {}
+  items.forEach(i => { freq[i] = (freq[i] ?? 0) + 1 })
+  return Object.entries(freq).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null
+}
 
-export async function getSymptomLogs(userId: string, params?: z.infer<typeof QuerySymptomSchema>) {
-  const parsed = params ? QuerySymptomSchema.safeParse(params) : { success: true, data: { limit: 50 } }
-  if (!parsed.success) throw new Error('Invalid query params')
-
+export async function getSymptomLogs(userId: string) {
   return prisma.symptomLog.findMany({
     where: { userId },
     orderBy: { loggedAt: 'desc' },
-    take: parsed.data.limit,
+    take: 50,
   })
 }
 
@@ -40,6 +38,7 @@ export async function createSymptomLog(userId: string, input: TCreateSymptomInpu
       severity: parsed.data.severity,
       notes: parsed.data.notes ?? null,
     },
+    select: { id: true },
   })
 }
 
@@ -48,10 +47,7 @@ export async function getRecentSymptomSummary(userId: string, days = 7) {
   since.setDate(since.getDate() - days)
 
   const logs = await prisma.symptomLog.findMany({
-    where: {
-      userId,
-      loggedAt: { gte: since },
-    },
+    where: { userId, loggedAt: { gte: since } },
     orderBy: { loggedAt: 'desc' },
   })
 
@@ -63,11 +59,4 @@ export async function getRecentSymptomSummary(userId: string, days = 7) {
     mostCommon: getMostCommon(logs.map(l => l.symptomName)),
     logs,
   }
-}
-
-function getMostCommon(items: string[]): string | null {
-  if (items.length === 0) return null
-  const freq: Record<string, number> = {}
-  items.forEach(i => { freq[i] = (freq[i] ?? 0) + 1 })
-  return Object.entries(freq).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null
 }

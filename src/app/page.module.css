@@ -9,89 +9,6 @@
   opacity: 0;
 }
 
-/* Header */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(247, 250, 253, 0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--sys-color-outline-outline-variant, #bbccdd);
-}
-
-.headerInner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  font-size: clamp(18px, 2.5vw, 24px);
-  font-weight: 700;
-  color: var(--sys-color-primary-primary, #690cb0);
-  letter-spacing: -0.5px;
-}
-
-.nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-}
-
-.navLink {
-  font-size: var(--sys-typography-text-md-medium-font-size, 16px);
-  font-weight: 600;
-  color: var(--sys-color-surface-on-surface-variant, #334e68);
-  padding: 4px 0;
-  border-bottom: 2px solid transparent;
-  transition: color 200ms, border-color 200ms;
-}
-
-.navLink:hover {
-  color: var(--sys-color-primary-primary, #690cb0);
-  border-bottom-color: var(--sys-color-primary-primary, #690cb0);
-}
-
-.navOutline {
-  font-size: var(--sys-typography-text-md-semibold-font-size, 14px);
-  font-weight: 600;
-  background: transparent;
-  color: var(--sys-color-primary-primary, #690cb0);
-  padding: 10px 24px;
-  border-radius: 9999px;
-  border: 1.5px solid var(--sys-color-primary-primary, #690cb0);
-  transition: background 200ms;
-}
-
-.navOutline:hover {
-  background: var(--sys-color-primary-primary-container, #edd9fc);
-}
-
-.navCta {
-  font-size: var(--sys-typography-text-md-semibold-font-size, 14px);
-  font-weight: 600;
-  background: var(--sys-color-primary-primary, #690cb0);
-  color: var(--sys-color-primary-on-primary, #ffffff);
-  padding: 10px 24px;
-  border-radius: 9999px;
-  transition: opacity 200ms;
-}
-
-.navCta:hover {
-  opacity: 0.9;
-}
-
-.headerActions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 /* Hero */
 .hero {
   padding: 120px 24px 80px;
@@ -399,10 +316,6 @@
 
   .sectionTitle {
     font-size: var(--sys-typography-display-xs-semibold-font-size, 24px);
-  }
-
-  .nav .navLink {
-    display: none;
   }
 
   .footerInner {

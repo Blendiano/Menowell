@@ -1,9 +1,9 @@
 'use server'
 
-import { auth } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
+import { requireAuth } from '@/lib/require-auth'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
+import { updateProfile } from '@/services/profile-service'
 
 const OnboardingSchema = z.object({
   dateOfBirth: z.string().min(1, 'Date of birth is required'),
@@ -17,29 +17,24 @@ const OnboardingSchema = z.object({
 export type TOnboardingInput = z.infer<typeof OnboardingSchema>
 
 export async function saveOnboarding(input: unknown) {
-  const session = await auth()
-  if (!session?.user?.id) return { error: 'Not authenticated.' }
+  let userId: string
+  try { userId = await requireAuth() } catch { return { error: 'Not authenticated.' } }
 
   const parsed = OnboardingSchema.safeParse(input)
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? 'Invalid input.' }
 
   try {
-    await prisma.user.update({
-      where: { id: session.user.id },
-      data: {
-        dateOfBirth: new Date(parsed.data.dateOfBirth),
-        menstrualStatus: parsed.data.menstrualStatus,
-        selectedSymptoms: JSON.stringify(parsed.data.selectedSymptoms),
-        symptomSeverity: parsed.data.symptomSeverity,
-        goals: JSON.stringify(parsed.data.goals),
-        image: parsed.data.profileImage ?? null,
-        onboardingCompleted: true,
-      },
+    await updateProfile(userId, {
+      dateOfBirth: parsed.data.dateOfBirth,
+      ...(parsed.data.profileImage ? { image: parsed.data.profileImage } : {}),
     })
 
     revalidatePath('/dashboard')
     return { data: { success: true } }
-  } catch {
+  } catch (error) {
+    console.error('saveOnboarding error:', error)
     return { error: 'Failed to save onboarding data.' }
   }
 }
+
+export { OnboardingSchema }

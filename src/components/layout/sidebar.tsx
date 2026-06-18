@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import { ThemeToggle } from './theme-toggle'
 import styles from './sidebar.module.css'
 
@@ -18,8 +17,6 @@ const NAV = [
 
 export function Sidebar() {
   const pathname = usePathname()
-  const { data: session } = useSession()
-  const unread = 0
 
   return (
     <nav className={styles.root} aria-label="Main navigation">

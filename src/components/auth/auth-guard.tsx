@@ -23,7 +23,8 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
         const res = await fetch('/api/auth/me')
         if (!res.ok) throw new Error('Invalid session')
         setReady(true)
-      } catch {
+      } catch (error) {
+        console.error('AuthGuard validation error:', error)
         await signOut({ redirect: false })
         router.replace('/auth')
       }

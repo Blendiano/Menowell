@@ -1,17 +1,11 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { use } from 'react'
+import { usePasswordValidation } from '@/hooks/use-password-validation'
 import styles from '@/components/auth/auth-card.module.css'
-
-const PASSWORD_RULES = [
-  { key: 'uppercase', label: 'At least one uppercase letter', test: (p: string) => /[A-Z]/.test(p) },
-  { key: 'number', label: 'At least one number', test: (p: string) => /[0-9]/.test(p) },
-  { key: 'special', label: 'At least one special character', test: (p: string) => /[^A-Za-z0-9]/.test(p) },
-  { key: 'minlength', label: 'At least 8 characters', test: (p: string) => p.length >= 8 },
-]
 
 type TResetPageProps = {
   params: Promise<{ token: string }>
@@ -20,16 +14,11 @@ type TResetPageProps = {
 export default function ResetPasswordPage({ params }: TResetPageProps) {
   const { token } = use(params)
   const router = useRouter()
-  const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-
-  const activeRequirement = useMemo(() => {
-    if (!password) return null
-    return PASSWORD_RULES.find(rule => !rule.test(password)) ?? null
-  }, [password])
+  const { passwordValue: password, setPasswordValue: setPassword, activeRequirement } = usePasswordValidation()
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -48,7 +37,8 @@ export default function ResetPasswordPage({ params }: TResetPageProps) {
       } else {
         setSuccess(true)
       }
-    } catch {
+    } catch (error) {
+      console.error('Reset password fetch error:', error)
       setError('Something went wrong. Please try again.')
     } finally {
       setLoading(false)

@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { usePasswordValidation } from '@/hooks/use-password-validation'
 import styles from './auth-card.module.css'
 
 type TLoginFormProps = {
@@ -17,19 +18,7 @@ export function LoginForm({ registered }: TLoginFormProps) {
   const [showPassword, setShowPassword] = useState(false)
   const [success, setSuccess] = useState(registered ?? false)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
-  const [passwordValue, setPasswordValue] = useState('')
-
-  const PASSWORD_RULES = [
-    { key: 'uppercase', label: 'At least one uppercase letter', test: (p: string) => /[A-Z]/.test(p) },
-    { key: 'number', label: 'At least one number', test: (p: string) => /[0-9]/.test(p) },
-    { key: 'special', label: 'At least one special character', test: (p: string) => /[^A-Za-z0-9]/.test(p) },
-    { key: 'minlength', label: 'At least 8 characters', test: (p: string) => p.length >= 8 },
-  ]
-
-  const activeRequirement = useMemo(() => {
-    if (!passwordValue) return null
-    return PASSWORD_RULES.find(rule => !rule.test(passwordValue)) ?? null
-  }, [passwordValue])
+  const { passwordValue, setPasswordValue, activeRequirement } = usePasswordValidation()
 
   const clearFieldError = useCallback((field: string) => {
     setFieldErrors(prev => {
@@ -68,14 +57,24 @@ export function LoginForm({ registered }: TLoginFormProps) {
 
     setFieldErrors({})
 
-    const result = await signIn('credentials', {
-      email,
-      password,
-      redirect: false,
-    })
+    let result
+    try {
+      result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      })
+    } catch (error) {
+      console.error('Sign in error:', error)
+      setError('A network error occurred. Please try again.')
+      setLoading(false)
+      return
+    }
 
     setLoading(false)
-    if (result?.error) {
+    if (!result) {
+      setError('A network error occurred. Please try again.')
+    } else if (result.error) {
       setError('Invalid email or password. Please try again.')
     } else {
       router.push('/dashboard')

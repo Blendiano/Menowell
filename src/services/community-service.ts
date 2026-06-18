@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
+import { prisma } from '@/lib/prisma'
 
 export const CreatePostSchema = z.object({
   content: z.string().min(1).max(5000),
@@ -43,11 +43,8 @@ export async function createPost(userId: string, input: TCreatePostInput) {
   if (!parsed.success) throw new Error(parsed.error.message)
 
   return prisma.communityPost.create({
-    data: {
-      userId,
-      content: parsed.data.content,
-      anonymous: parsed.data.anonymous,
-    },
+    data: { userId, content: parsed.data.content, anonymous: parsed.data.anonymous },
+    select: { id: true },
   })
 }
 
@@ -56,17 +53,15 @@ export async function createComment(userId: string, postId: string, input: TCrea
   if (!parsed.success) throw new Error(parsed.error.message)
 
   return prisma.comment.create({
-    data: {
-      userId,
-      postId,
-      content: parsed.data.content,
-    },
+    data: { userId, postId, content: parsed.data.content },
+    select: { id: true },
   })
 }
 
 export async function toggleReaction(userId: string, postId: string, type: string) {
   const existing = await prisma.reaction.findFirst({
-    where: { postId, type },
+    where: { postId, userId, type },
+    select: { id: true },
   })
 
   if (existing) {
@@ -75,7 +70,8 @@ export async function toggleReaction(userId: string, postId: string, type: strin
   }
 
   await prisma.reaction.create({
-    data: { postId, type },
+    data: { postId, userId, type },
+    select: { id: true },
   })
   return { reacted: true }
 }

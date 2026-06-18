@@ -27,8 +27,8 @@ export default function ForgotPasswordPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       })
-    } catch {
-      // Silently ignore — always show success for security
+    } catch (error) {
+      console.error('Forgot password fetch error:', error)
     } finally {
       setSent(true)
       setLoading(false)

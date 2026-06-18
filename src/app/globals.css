@@ -10,6 +10,11 @@ body {
   font-family: var(--sys-typography-text-md-regular-font-family, 'Plus Jakarta Sans', sans-serif);
   background-color: var(--sys-color-background, #f7fafd);
   color: var(--sys-color-on-background, #0f273e);
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  body { font-size: 0.9375rem; }
 }
 
 a {

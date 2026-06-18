@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
+import { usePasswordValidation } from '@/hooks/use-password-validation'
 import styles from './auth-card.module.css'
 
 export function RegisterForm() {
@@ -12,19 +13,7 @@ export function RegisterForm() {
   const [loading, setLoading] = useState(false)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [showPassword, setShowPassword] = useState(false)
-  const [passwordValue, setPasswordValue] = useState('')
-
-  const PASSWORD_RULES = [
-    { key: 'uppercase', label: 'At least one uppercase letter', test: (p: string) => /[A-Z]/.test(p) },
-    { key: 'number', label: 'At least one number', test: (p: string) => /[0-9]/.test(p) },
-    { key: 'special', label: 'At least one special character', test: (p: string) => /[^A-Za-z0-9]/.test(p) },
-    { key: 'minlength', label: 'At least 8 characters', test: (p: string) => p.length >= 8 },
-  ]
-
-  const activeRequirement = useMemo(() => {
-    if (!passwordValue) return null
-    return PASSWORD_RULES.find(rule => !rule.test(passwordValue)) ?? null
-  }, [passwordValue])
+  const { passwordValue, setPasswordValue, activeRequirement, validatePassword } = usePasswordValidation()
 
   const clearFieldError = useCallback((field: string) => {
     setFieldErrors(prev => {
@@ -72,14 +61,9 @@ export function RegisterForm() {
       return
     }
 
-    if (!/[A-Z]/.test(password)) {
-      errors.password = 'At least one uppercase letter required'
-    } else if (!/[0-9]/.test(password)) {
-      errors.password = 'At least one number required'
-    } else if (!/[^A-Za-z0-9]/.test(password)) {
-      errors.password = 'At least one special character required'
-    } else if (password.length < 8) {
-      errors.password = 'At least 8 characters required'
+    const passwordError = validatePassword(password)
+    if (passwordError) {
+      errors.password = passwordError
     }
 
     if (Object.keys(errors).length > 0) {
@@ -107,7 +91,8 @@ export function RegisterForm() {
           router.push('/onboarding')
         }
       }
-    } catch {
+    } catch (error) {
+      console.error('Registration error:', error)
       setError('Something went wrong. Please try again.')
     } finally {
       setLoading(false)

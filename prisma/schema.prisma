@@ -13,9 +13,9 @@ model User {
   emailVerified          DateTime?
   image                  String?
   passwordHash           String?
-   dateOfBirth            DateTime?
-   preferredLanguage      String    @default("en")
-   notificationPreference Boolean   @default(true)
+  dateOfBirth            DateTime?
+  preferredLanguage      String    @default("en")
+  notificationPreference Boolean   @default(true)
    menstrualStatus        String?
    selectedSymptoms       String?
    symptomSeverity        String?
@@ -28,11 +28,12 @@ model User {
    accounts               Account[]
    sessions               Session[]
 
-   symptoms               SymptomLog[]
+  symptoms               SymptomLog[]
   stages                 MenopauseStage[]
   insights               AIInsight[]
   posts                  CommunityPost[]
   comments               Comment[]
+  reactions              Reaction[]
   notifications          Notification[]
 }
 
@@ -78,7 +79,7 @@ model SymptomLog {
 
 model MenopauseStage {
   id              String   @id @default(uuid())
-  userId          String
+  userId          String   @unique
   stageName       String
   confidenceScore Decimal
   updatedAt       DateTime @updatedAt
@@ -121,9 +122,13 @@ model Comment {
 model Reaction {
   id        String   @id @default(uuid())
   postId    String
+  userId    String
   type      String
 
   post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId, type])
 }
 
 model Notification {

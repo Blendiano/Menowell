@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createPost } from '@/features/community/actions'
 import { Button } from '@/components/ui/button'
@@ -12,6 +12,11 @@ export default function NewPostPage() {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    textareaRef.current?.focus()
+  }, [])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -42,6 +47,7 @@ export default function NewPostPage() {
         <div className={styles.field}>
           <label htmlFor="content" className={styles.label}>What&apos;s on your mind?</label>
           <textarea
+            ref={textareaRef}
             id="content"
             name="content"
             rows={6}

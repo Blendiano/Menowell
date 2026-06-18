@@ -28,7 +28,7 @@
 .avatarWrap { flex-shrink: 0; }
 .avatar { width: 64px; height: 64px; border-radius: 9999px; object-fit: cover; }
 .avatarFallback { width: 64px; height: 64px; border-radius: 9999px; background: var(--sys-color-primary-primary-container, #edd9fc); color: var(--sys-color-primary-on-primary-container, #550a8f); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; }
-.info { display: flex; flex-direction: column; gap: 4px; }
+.info { display: flex; flex-direction: column; }
 .name { font-size: 20px; font-weight: 600; color: var(--sys-color-surface-on-surface, #0f273e); }
 .email { font-size: 14px; color: var(--sys-color-surface-on-surface-variant, #334e68); }
 

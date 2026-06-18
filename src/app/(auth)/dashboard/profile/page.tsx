@@ -1,25 +1,23 @@
 import { getCurrentUser } from '@/lib/user'
 import { redirect } from 'next/navigation'
 import { signOut } from '@/lib/auth'
-import { getStage } from '@/services/user-service'
+import { getStage } from '@/services/stage-service'
 import Link from 'next/link'
+import { STAGE_LABELS } from '@/lib/constants'
 import styles from './profile.module.css'
 
 export const dynamic = 'force-dynamic'
-
-const STAGE_LABELS: Record<string, string> = {
-  premenopausal: 'Premenopausal',
-  perimenopausal_early: 'Early Perimenopause',
-  perimenopausal_late: 'Late Perimenopause',
-  menopausal: 'Menopause',
-  postmenopausal: 'Postmenopause',
-}
 
 export default async function ProfilePage() {
   const user = await getCurrentUser()
   if (!user) redirect('/auth')
 
-  const stage = await getStage(user.id)
+  let stage: { stageName: string; confidenceScore: number } | null = null
+  try {
+    stage = await getStage(user.id)
+  } catch (error) {
+    console.error('Profile stage fetch error:', error)
+  }
 
   return (
     <main className={styles.root}>

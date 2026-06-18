@@ -23,18 +23,17 @@ export async function POST(request: NextRequest) {
 
     const { name, email, password } = parsed.data
 
-    const existing = await prisma.user.findUnique({ where: { email } })
-    if (existing) {
-      return NextResponse.json({ error: 'An account with that email already exists.' }, { status: 409 })
-    }
-
     const hash = await bcrypt.hash(password, 12)
     await prisma.user.create({
       data: { name, email, passwordHash: hash, image: null },
     })
 
     return NextResponse.json({ data: { message: 'Account created successfully.' } }, { status: 201 })
-  } catch {
+  } catch (error) {
+    if (typeof error === 'object' && error !== null && 'code' in error && (error as { code: string }).code === 'P2002') {
+      return NextResponse.json({ error: 'An account with that email already exists.' }, { status: 409 })
+    }
+    console.error('Registration error:', error)
     return NextResponse.json({ error: 'Internal server error.' }, { status: 500 })
   }
 }

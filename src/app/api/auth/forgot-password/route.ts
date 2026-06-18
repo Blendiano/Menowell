@@ -3,16 +3,22 @@ import { prisma } from '@/lib/prisma'
 import { sendMail } from '@/lib/mail'
 import { env } from '@/lib/env'
 import crypto from 'crypto'
+import { z } from 'zod'
+
+const ForgotPasswordSchema = z.object({
+  email: z.string().email(),
+})
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json()
-
-    if (!email || typeof email !== 'string') {
-      return NextResponse.json({ error: 'Email is required.' }, { status: 400 })
+    const body = await request.json()
+    const parsed = ForgotPasswordSchema.safeParse(body)
+    if (!parsed.success) {
+      return NextResponse.json({ error: 'A valid email is required.' }, { status: 400 })
     }
 
-    const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } })
+    const email = parsed.data.email.toLowerCase()
+    const user = await prisma.user.findUnique({ where: { email } })
 
     if (!user) {
       return NextResponse.json({ data: { message: 'If an account exists, a reset link has been sent.' } })
@@ -27,9 +33,15 @@ export async function POST(request: NextRequest) {
     })
 
     const resetUrl = `${env.NEXT_PUBLIC_APP_URL}/auth/reset-password/${token}`
+    const recipientEmail = user.email
+
+    if (!recipientEmail) {
+      console.error('User has no email for password reset:', user.id)
+      return NextResponse.json({ data: { message: 'If an account exists, a reset link has been sent.' } })
+    }
 
     await sendMail({
-      to: user.email!,
+      to: recipientEmail,
       subject: 'Reset your Menowell password',
       html: `
         <div style="font-family:sans-serif;max-width:480px;margin:0 auto;">
@@ -44,7 +56,8 @@ export async function POST(request: NextRequest) {
     })
 
     return NextResponse.json({ data: { message: 'If an account exists, a reset link has been sent.' } })
-  } catch {
+  } catch (error) {
+    console.error('Forgot password error:', error)
     return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 })
   }
 }

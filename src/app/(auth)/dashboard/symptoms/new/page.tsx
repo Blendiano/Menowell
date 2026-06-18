@@ -69,7 +69,9 @@ export default function NewSymptomPage() {
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="severity" className={styles.label}>Severity: <strong>{severity}</strong>/10</label>
+          <label htmlFor="severity" className={styles.label}>
+            Severity: <strong key={severity} className={styles.severityValue}>{severity}</strong>/10
+          </label>
           <input
             id="severity"
             type="range"
@@ -77,6 +79,7 @@ export default function NewSymptomPage() {
             value={severity}
             onChange={(e) => setSeverity(Number(e.target.value))}
             className={styles.slider}
+            style={{ '--slider-fill': `${((severity - 1) / 9) * 100}%` } as React.CSSProperties}
             aria-valuemin={1} aria-valuemax={10} aria-valuenow={severity}
           />
           <div className={styles.sliderLabels}><span>Mild</span><span>Severe</span></div>

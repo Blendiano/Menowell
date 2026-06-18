@@ -9,6 +9,7 @@ export default function GlobalError({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  console.error('Global error boundary caught:', error)
   return (
     <main style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',

@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { writeFile } from 'fs/promises'
+import { writeFile, mkdir } from 'fs/promises'
 import path from 'path'
+import crypto from 'crypto'
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+const ALLOWED_EXTS = new Set(['jpg', 'jpeg', 'png', 'webp', 'gif'])
 const MAX_SIZE = 2 * 1024 * 1024
+
+const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'avatars')
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,14 +25,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File too large. Maximum 2 MB.' }, { status: 400 })
     }
 
-    const ext = file.name.split('.').pop() ?? 'jpg'
+    const rawExt = file.name.split('.').pop()?.toLowerCase() ?? ''
+    const ext = ALLOWED_EXTS.has(rawExt) ? rawExt : 'jpg'
     const filename = `${crypto.randomUUID()}.${ext}`
+
+    await mkdir(UPLOAD_DIR, { recursive: true })
+
     const bytes = Buffer.from(await file.arrayBuffer())
-    const filepath = path.join(process.cwd(), 'public', 'uploads', 'avatars', filename)
+    const filepath = path.join(UPLOAD_DIR, filename)
     await writeFile(filepath, bytes)
 
     return NextResponse.json({ data: { url: `/uploads/avatars/${filename}` } })
-  } catch {
+  } catch (error) {
+    console.error('Avatar upload error:', error)
     return NextResponse.json({ error: 'Failed to upload file.' }, { status: 500 })
   }
 }
