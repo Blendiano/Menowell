@@ -1,7 +1,8 @@
-import NextAuth from 'next-auth'
+import NextAuth, { type NextAuthOptions, getServerSession } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
+import { redirect } from 'next/navigation'
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const authOptions: NextAuthOptions = {
   session: { strategy: 'jwt', maxAge: 7 * 24 * 60 * 60 },
   pages: {
     signIn: '/auth/login',
@@ -44,15 +45,25 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    jwt({ token, user }) {
+    jwt({ token, user }: any) {
       if (user) token.id = user.id
       return token
     },
-    session({ session, token }) {
+    session({ session, token }: any) {
       if (token.id && session.user) {
         (session.user as any).id = token.id as string
       }
       return session
     },
   },
-})
+}
+
+const handler = NextAuth(authOptions)
+
+export { handler as GET, handler as POST }
+
+export const auth = () => getServerSession(authOptions)
+export const signIn = async () => {}
+export const signOut = async (options?: { redirectTo?: string }) => {
+  redirect(options?.redirectTo ? `/api/auth/signout?callbackUrl=${encodeURIComponent(options.redirectTo)}` : '/api/auth/signout')
+}
