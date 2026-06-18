@@ -1,17 +1,18 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { sendMail } from '@/lib/mail'
-import { env } from '@/lib/env'
+import { NextResponse } from 'next/server'
 import crypto from 'crypto'
-import { z } from 'zod'
 
-const ForgotPasswordSchema = z.object({
-  email: z.string().email(),
-})
-
-export async function POST(request: NextRequest) {
+export async function POST(req: Request) {
   try {
-    const body = await request.json()
+    const { prisma } = await import('@/lib/prisma')
+    const { sendMail } = await import('@/lib/mail')
+    const { env } = await import('@/lib/env')
+    const { z } = await import('zod')
+
+    const ForgotPasswordSchema = z.object({
+      email: z.string().email(),
+    })
+
+    const body = await req.json()
     const parsed = ForgotPasswordSchema.safeParse(body)
     if (!parsed.success) {
       return NextResponse.json({ error: 'A valid email is required.' }, { status: 400 })
