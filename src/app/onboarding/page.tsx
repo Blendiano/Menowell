@@ -49,13 +49,13 @@ export default function OnboardingPage() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   function toggleSymptom(symptom: string) {
-    if (symptom === 'No symptoms yet') {
-      setSelectedSymptoms(prev => prev.includes(symptom) ? [] : ['No symptoms yet'])
+    if (symptom === 'No symptoms currently') {
+      setSelectedSymptoms(prev => prev.includes(symptom) ? [] : ['No symptoms currently'])
     } else {
       setSelectedSymptoms(prev =>
         prev.includes(symptom)
           ? prev.filter(s => s !== symptom)
-          : [...prev.filter(s => s !== 'No symptoms yet'), symptom]
+          : [...prev.filter(s => s !== 'No symptoms currently'), symptom]
       )
     }
     setFieldErrors(prev => ({ ...prev, symptoms: '' }))
@@ -116,42 +116,48 @@ export default function OnboardingPage() {
       return
     }
 
-    setShowCelebration(true)
     setLoading(true)
     setError(null)
 
-    await new Promise(r => setTimeout(r, 2000))
-    setShowCelebration(false)
+    try {
+      let imageUrl: string | undefined
+      if (profileImage) {
+        const formData = new FormData()
+        formData.append('file', profileImage)
+        const uploadRes = await fetch('/api/upload/avatar', { method: 'POST', body: formData })
+        const uploadData = await uploadRes.json()
+        if (uploadData.error) {
+          setError(uploadData.error)
+          setLoading(false)
+          return
+        }
+        imageUrl = uploadData.data.url
+      }
 
-    let imageUrl: string | undefined
-    if (profileImage) {
-      const formData = new FormData()
-      formData.append('file', profileImage)
-      const uploadRes = await fetch('/api/upload/avatar', { method: 'POST', body: formData })
-      const uploadData = await uploadRes.json()
-      if (uploadData.error) {
-        setError(uploadData.error)
+      const result = await saveOnboarding({
+        dateOfBirth,
+        menstrualStatus,
+        selectedSymptoms,
+        symptomSeverity,
+        goals,
+        profileImage: imageUrl,
+      })
+
+      if (result.error) {
+        setError(result.error)
         setLoading(false)
         return
       }
-      imageUrl = uploadData.data.url
-    }
 
-    const result = await saveOnboarding({
-      dateOfBirth,
-      menstrualStatus,
-      selectedSymptoms,
-      symptomSeverity,
-      goals,
-      profileImage: imageUrl,
-    })
-
-    setLoading(false)
-
-    if (result.error) {
-      setError(result.error)
-    } else {
+      setShowCelebration(true)
+      await new Promise(r => setTimeout(r, 2000))
+      setShowCelebration(false)
+      setLoading(false)
       router.push('/dashboard')
+    } catch (err) {
+      console.error('Onboarding error:', err)
+      setError('Something went wrong. Please try again.')
+      setLoading(false)
     }
   }
 
