@@ -24,8 +24,11 @@ export async function saveOnboarding(input: unknown) {
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? 'Invalid input.' }
 
   try {
+    const parts = parsed.data.dateOfBirth.split('/')
+    const normalizedDate = parts.length === 3 ? `${parts[2]}-${parts[1]}-${parts[0]}` : parsed.data.dateOfBirth
+
     await updateProfile(userId, {
-      dateOfBirth: parsed.data.dateOfBirth,
+      dateOfBirth: normalizedDate,
       onboardingCompleted: true,
       ...(parsed.data.profileImage ? { image: parsed.data.profileImage } : {}),
     })
