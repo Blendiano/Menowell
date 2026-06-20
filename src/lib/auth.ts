@@ -3,6 +3,7 @@ import Credentials from 'next-auth/providers/credentials'
 import { redirect } from 'next/navigation'
 
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: 'jwt', maxAge: 7 * 24 * 60 * 60 },
   pages: {
     signIn: '/auth/login',
