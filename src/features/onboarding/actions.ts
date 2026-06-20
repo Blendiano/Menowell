@@ -41,4 +41,4 @@ export async function saveOnboarding(input: unknown) {
   }
 }
 
-export { OnboardingSchema }
+
