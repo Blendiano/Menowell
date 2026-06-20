@@ -26,6 +26,7 @@ export async function saveOnboarding(input: unknown) {
   try {
     await updateProfile(userId, {
       dateOfBirth: parsed.data.dateOfBirth,
+      onboardingCompleted: true,
       ...(parsed.data.profileImage ? { image: parsed.data.profileImage } : {}),
     })
 

@@ -333,7 +333,7 @@ export default function OnboardingPage() {
             </button>
           ) : <div />}
           <button type="button" className={styles.btnPrimary} disabled={!canProceed() || loading} onClick={handleNext}>
-            {loading ? 'Saving…' : step === totalSteps - 1 ? 'Get started & go to dashboard' : 'Continue'}
+            {loading ? <span className={styles.spinner} /> : step === totalSteps - 1 ? 'Get started & go to dashboard' : 'Continue'}
           </button>
         </div>
       </div>
