@@ -1,5 +1,4 @@
 import nodemailer from "nodemailer";
-import { env } from "./env";
 
 const {
   SMTP_HOST,
@@ -7,7 +6,7 @@ const {
   SMTP_USER,
   SMTP_PASS,
   SMTP_FROM,
-} = env;
+} = process.env;
 
 if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !SMTP_FROM) {
   console.warn("SMTP not configured — email features are disabled.");
@@ -16,8 +15,8 @@ if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !SMTP_FROM) {
 const transporter = SMTP_HOST
   ? nodemailer.createTransport({
       host: SMTP_HOST,
-      port: SMTP_PORT!,
-      secure: SMTP_PORT === 465,
+      port: Number(SMTP_PORT),
+      secure: Number(SMTP_PORT) === 465,
       auth: { user: SMTP_USER!, pass: SMTP_PASS! },
     })
   : null;
