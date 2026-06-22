@@ -265,16 +265,10 @@ export default function OnboardingPage() {
             <p className={styles.stepDesc}>
               We&apos;ll personalize Menowell to help you better understand your symptoms and journey.
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 20 }}>
+            <div className={styles.avatarSection}>
               <div
                 onClick={() => fileInputRef.current?.click()}
-                style={{
-                  width: 88, height: 88, borderRadius: '50%', overflow: 'hidden',
-                  background: '#f0f5fa', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  border: '2px dashed #bbccdd', transition: 'border-color 200ms', position: 'relative',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.borderColor = '#690cb0')}
-                onMouseLeave={e => (e.currentTarget.style.borderColor = '#bbccdd')}
+                className={styles.avatarCircle}
               >
                 {profileImagePreview ? (
                   <Image src={profileImagePreview} alt="Profile" fill style={{ objectFit: 'cover' }} />
@@ -289,7 +283,7 @@ export default function OnboardingPage() {
                 ref={fileInputRef}
                 type="file"
                 accept="image/jpeg,image/png,image/webp,image/gif"
-                style={{ display: 'none' }}
+                hidden
                 onChange={e => {
                   const file = e.target.files?.[0]
                   if (file) {
@@ -301,29 +295,29 @@ export default function OnboardingPage() {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                style={{ background: 'none', border: 'none', color: '#690cb0', fontSize: 13, fontWeight: 600, cursor: 'pointer', marginTop: 8 }}
+                className={styles.avatarBtn}
               >
                 {profileImagePreview ? 'Change photo' : 'Add a profile photo'}
               </button>
             </div>
-            <div style={{ background: '#0f273e', borderRadius: 16, padding: 24, marginBottom: 16, boxShadow: '0 4px 20px rgba(15,39,62,0.16)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div style={{ fontSize: 16, fontWeight: 700, color: '#ffffff', marginBottom: 16 }}>Your profile</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                  <span style={{ fontSize: 14, color: '#ffffff' }}>Stage</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: '#ffffff' }}>{MENSTRUAL_OPTIONS.find(o => o.value === menstrualStatus)?.label}</span>
+            <div className={styles.summaryCard}>
+              <div className={styles.summaryTitle}>Your profile</div>
+              <div className={styles.summaryRows}>
+                <div className={styles.summaryRow}>
+                  <span className={styles.summaryLabel}>Stage</span>
+                  <span className={styles.summaryValue}>{MENSTRUAL_OPTIONS.find(o => o.value === menstrualStatus)?.label}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                  <span style={{ fontSize: 14, color: '#ffffff' }}>Symptoms</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: '#ffffff' }}>{selectedSymptoms.length} selected</span>
+                <div className={styles.summaryRow}>
+                  <span className={styles.summaryLabel}>Symptoms</span>
+                  <span className={styles.summaryValue}>{selectedSymptoms.length} selected</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                  <span style={{ fontSize: 14, color: '#ffffff' }}>Impact</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: '#ffffff' }}>{SEVERITY_OPTIONS.find(o => o.value === symptomSeverity)?.label ?? symptomSeverity}</span>
+                <div className={styles.summaryRow}>
+                  <span className={styles.summaryLabel}>Impact</span>
+                  <span className={styles.summaryValue}>{SEVERITY_OPTIONS.find(o => o.value === symptomSeverity)?.label ?? symptomSeverity}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: 14, color: '#ffffff' }}>Goal</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: '#ffffff', textAlign: 'right' }}>Track symptoms, get personalized insights</span>
+                <div className={styles.summaryRow}>
+                  <span className={styles.summaryLabel}>Goal</span>
+                  <span className={styles.summaryValue}>Track symptoms, get personalized insights</span>
                 </div>
               </div>
             </div>
@@ -361,7 +355,7 @@ export default function OnboardingPage() {
               }}
             />
           ))}
-          <div style={{ fontSize: 48, animation: 'bounce 0.6s ease infinite', position: 'relative', zIndex: 1 }}>🎉</div>
+          <div className={styles.celebrationEmoji}>🎉</div>
         </div>
       )}
     </main>

@@ -100,7 +100,7 @@ export function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`${styles.form} ${styles.registerForm}`} noValidate>
+    <form onSubmit={handleSubmit} className={`${styles.form} ${styles.noLabelShift}`} noValidate>
       <div className={styles.field}>
         <label htmlFor="name" className={styles.label}>Enter full name</label>
         <input id="name" name="name" type="text" autoComplete="name" required className={styles.input} placeholder="Jane Smith" autoFocus onChange={e => handleNameChange(e.target.value)} onBlur={e => { if (!e.target.value.trim()) setFieldErrors(prev => ({ ...prev, name: 'This field cannot be empty' })); }} />

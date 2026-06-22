@@ -26,9 +26,7 @@ export default async function SymptomsPage() {
         <p className={styles.supportText}>Log symptoms. Track trends. Understand your health.</p>
       </div>
 
-      {logs.length === 0 ? (
-        <div className={styles.empty}></div>
-      ) : (
+      {logs.length === 0 ? null : (
         <ul className={styles.list}>
           {logs.map((log) => (
             <li key={log.id} className={styles.logItem}>

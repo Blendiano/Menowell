@@ -1,12 +1,9 @@
-import { getCurrentUser } from '@/lib/user'
 import Link from 'next/link'
 import { TransitionLink } from '@/components/ui/transition-link'
 import { MarketingHeader } from '@/components/layout/marketing-header'
 import styles from './page.module.css'
 
 export default async function LandingPage() {
-  const user = await getCurrentUser()
-
   return (
     <div id="page-root" className={styles.page}>
       <MarketingHeader />

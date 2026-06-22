@@ -1,5 +1,5 @@
 import { getToken } from 'next-auth/jwt'
-import { prisma } from '@/lib/prisma'
+import { getUserById } from '@/lib/user'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
@@ -8,10 +8,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const user = await prisma.user.findUnique({
-    where: { id: token.sub },
-    select: { id: true, name: true, email: true, image: true, onboardingCompleted: true },
-  })
+  const user = await getUserById(token.sub)
 
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

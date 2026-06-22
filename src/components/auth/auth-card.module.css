@@ -10,9 +10,7 @@
 .labelRow { display:flex; justify-content:space-between; align-items:center; }
 .label { font-size:var(--sys-typography-text-md-medium-font-size,16px); font-weight:var(--sys-typography-text-md-medium-font-weight,500); color:var(--sys-color-surface-on-surface,#0f273e); transition:color 200ms ease-out; }
 .field:has(.input:not(:placeholder-shown)) .label { color:var(--sys-color-secondary-secondary-container,#e8def8); }
-:root:not([data-theme="dark"]) .forgotForm .field:has(.input:not(:placeholder-shown)) .label { color:var(--sys-color-surface-on-surface,#0f273e); }
-:root:not([data-theme="dark"]) .registerForm .field:has(.input:not(:placeholder-shown)) .label { color:var(--sys-color-surface-on-surface,#0f273e); }
-:root:not([data-theme="dark"]) .loginForm .field:has(.input:not(:placeholder-shown)) .label { color:var(--sys-color-surface-on-surface,#0f273e); }
+:root:not([data-theme="dark"]) .noLabelShift .field:has(.input:not(:placeholder-shown)) .label { color:var(--sys-color-surface-on-surface,#0f273e); }
 .hint { font-weight:400; color:var(--sys-color-surface-on-surface-variant,#334e68); }
 .forgotLink { font-size:var(--sys-typography-text-md-medium-font-size,16px); color:var(--sys-color-primary-primary,#690cb0); text-align:right; display:block; }
 .input { border:1.5px solid var(--sys-color-outline-outline-variant,#bbccdd); border-radius:12px; padding:12px 24px; font-size:15px; font-family:inherit; color:var(--sys-color-add-on-surface-color-on-background,#0f273e); background:var(--sys-color-surface-surface,#ffffff); transition:border-color 200ms ease-out, box-shadow 200ms ease-out, background 200ms ease-out, color 200ms ease-out; outline:none; width:100%; box-shadow:0 4px 16px rgba(0,0,0,0.10); }
