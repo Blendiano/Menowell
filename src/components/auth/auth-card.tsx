@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import Link from 'next/link'
 import styles from './auth-card.module.css'
 
 type TAuthCardProps = {
@@ -11,7 +12,7 @@ export function AuthCard({ heading, subtitle, children }: TAuthCardProps) {
   return (
     <main className={styles.root}>
       <div className={styles.header}>
-        <h1 className={styles.brand}>Menowell</h1>
+        <Link href="/" className={styles.brand}>Menowell</Link>
       </div>
       <div className={styles.card}>
         <h2 className={styles.formHeading}>{heading}</h2>

@@ -310,19 +310,19 @@ export default function OnboardingPage() {
               <div style={{ fontSize: 16, fontWeight: 700, color: '#ffffff', marginBottom: 16 }}>Your profile</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                  <span style={{ fontSize: 14, color: '#94a3b8' }}>Stage</span>
+                  <span style={{ fontSize: 14, color: '#ffffff' }}>Stage</span>
                   <span style={{ fontSize: 14, fontWeight: 600, color: '#ffffff' }}>{MENSTRUAL_OPTIONS.find(o => o.value === menstrualStatus)?.label}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                  <span style={{ fontSize: 14, color: '#94a3b8' }}>Symptoms</span>
+                  <span style={{ fontSize: 14, color: '#ffffff' }}>Symptoms</span>
                   <span style={{ fontSize: 14, fontWeight: 600, color: '#ffffff' }}>{selectedSymptoms.length} selected</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                  <span style={{ fontSize: 14, color: '#94a3b8' }}>Impact</span>
+                  <span style={{ fontSize: 14, color: '#ffffff' }}>Impact</span>
                   <span style={{ fontSize: 14, fontWeight: 600, color: '#ffffff' }}>{SEVERITY_OPTIONS.find(o => o.value === symptomSeverity)?.label ?? symptomSeverity}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: 14, color: '#94a3b8' }}>Goal</span>
+                  <span style={{ fontSize: 14, color: '#ffffff' }}>Goal</span>
                   <span style={{ fontSize: 14, fontWeight: 600, color: '#ffffff', textAlign: 'right' }}>Track symptoms, get personalized insights</span>
                 </div>
               </div>

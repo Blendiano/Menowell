@@ -84,7 +84,7 @@ export function LoginForm({ registered }: TLoginFormProps) {
   return (
     <>
       {error && <div className={styles.errorSnackbar} role="alert">{error}</div>}
-      <form onSubmit={handleSubmit} className={styles.form} noValidate style={{marginTop:16}}>
+      <form onSubmit={handleSubmit} className={`${styles.form} ${styles.loginForm}`} noValidate style={{marginTop:16}}>
       <div className={styles.field}>
         <label htmlFor="email" className={styles.label}>Enter email address</label>
         <input id="email" name="email" type="email" autoComplete="email" required className={styles.input} placeholder="you@example.com" onChange={() => clearFieldError('email')} onFocus={() => setError(null)} />

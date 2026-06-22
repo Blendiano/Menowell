@@ -1,5 +1,4 @@
 import { getCurrentUser } from '@/lib/user'
-import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TransitionLink } from '@/components/ui/transition-link'
 import { MarketingHeader } from '@/components/layout/marketing-header'
@@ -7,7 +6,6 @@ import styles from './page.module.css'
 
 export default async function LandingPage() {
   const user = await getCurrentUser()
-  if (user) redirect('/dashboard')
 
   return (
     <div id="page-root" className={styles.page}>

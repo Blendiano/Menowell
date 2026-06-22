@@ -9,6 +9,7 @@ import styles from './edit-profile.module.css'
 type TUserData = {
   name: string | null
   email: string | null
+  image: string | null
   dateOfBirth: Date | null
   preferredLanguage: string
   notificationPreference: boolean
@@ -43,12 +44,42 @@ export function EditProfileForm({ user }: { user: TUserData }) {
     })
   }
 
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(user.image)
   const dobValue = user.dateOfBirth
     ? new Date(user.dateOfBirth).toISOString().split('T')[0]
     : ''
 
+  function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => setAvatarPreview(reader.result as string)
+    reader.readAsDataURL(file)
+  }
+
   return (
     <form onSubmit={handleSubmit} className={styles.form} noValidate>
+      <div className={styles.avatarSection}>
+        <div className={styles.avatarWrap}>
+          {avatarPreview ? (
+            <img src={avatarPreview} alt="Avatar preview" className={styles.avatar} />
+          ) : (
+            <div className={styles.avatarFallback}>
+              {user.name?.charAt(0).toUpperCase() ?? '?'}
+            </div>
+          )}
+        </div>
+        <label className={styles.avatarLabel}>
+          <input
+            type="file"
+            accept="image/*"
+            className={styles.avatarInput}
+            onChange={handleAvatarChange}
+          />
+          Change photo
+        </label>
+        <input type="hidden" name="image" value={avatarPreview ?? ''} />
+      </div>
       <div className={styles.field}>
         <label htmlFor="name" className={styles.label}>Full name</label>
         <input id="name" name="name" type="text" className={styles.input} defaultValue={user.name ?? ''} />

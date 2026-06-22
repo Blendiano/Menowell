@@ -15,6 +15,7 @@ export default async function EditProfilePage() {
     select: {
       name: true,
       email: true,
+      image: true,
       dateOfBirth: true,
       preferredLanguage: true,
       notificationPreference: true,

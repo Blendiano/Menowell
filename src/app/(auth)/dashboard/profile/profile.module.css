@@ -60,6 +60,6 @@
 }
 
 .dangerZone { background: var(--sys-color-surface-surface, #fff); border: 1px solid var(--sys-color-outline-outline-variant, #bbccdd); border-radius: 16px; padding: 28px 24px; }
-.dangerTitle { font-size: 16px; font-weight: 600; color: var(--sys-color-surface-on-surface, #0f273e); margin-bottom: 16px; }
+.dangerTitle { font-size: 16px; font-weight: 600; color: var(--sys-color-surface-on-surface, #0f273e); margin-bottom: 8px; }
 .signOutBtn { background: transparent; border: 1.5px solid var(--sys-color-error-error, #f01b1f); color: var(--sys-color-error-error, #f01b1f); border-radius: 9999px; padding: 10px 24px; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer; transition: background 200ms ease-out, color 200ms ease-out; }
 .signOutBtn:hover { background: var(--sys-color-error-error, #f01b1f); color: var(--sys-color-error-on-error, #fff); }

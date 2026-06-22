@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ThemeToggle } from './theme-toggle'
 import styles from './sidebar.module.css'
 
 const NAV = [
@@ -39,7 +38,6 @@ export function Sidebar() {
         })}
       </ul>
       <div className={styles.bottom}>
-        <ThemeToggle />
       </div>
     </nav>
   )

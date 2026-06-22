@@ -56,7 +56,7 @@ export default function ForgotPasswordPage() {
             </Link>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className={styles.form} noValidate>
+          <form onSubmit={handleSubmit} className={`${styles.form} ${styles.forgotForm}`} noValidate>
             <h2 className={styles.formHeading}>Reset your password</h2>
             <div className={styles.field}>
               <label htmlFor="email" className={styles.label}>Enter your email address</label>

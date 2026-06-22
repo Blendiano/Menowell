@@ -2,7 +2,7 @@
 .title { font-size: 32px; font-weight: 700; color: var(--sys-color-surface-on-surface, #0f273e); margin-bottom: 8px; }
 .subtitle { font-size: 16px; color: var(--sys-color-surface-on-surface-variant, #334e68); margin-bottom: 6px; }
 .disclaimer { font-size: 13px; color: var(--sys-color-surface-on-surface-variant, #334e68); font-style: italic; margin-bottom: 32px; }
-.empty { text-align: center; padding: 64px 24px; font-size: 16px; color: var(--sys-color-surface-on-surface-variant, #334e68); }
+.empty { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 40vh; font-size: 16px; color: var(--sys-color-surface-on-surface-variant, #334e68); }
 .grid { list-style: none; display: grid; grid-template-columns: 1fr; gap: 20px; }
 @media (min-width: 768px) { .grid { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 1024px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }

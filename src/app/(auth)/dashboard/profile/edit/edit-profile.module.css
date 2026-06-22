@@ -22,6 +22,14 @@
   gap: 20px;
 }
 
+.avatarSection { display: flex; flex-direction: column; align-items: center; gap: 12px; padding-bottom: 8px; }
+.avatarWrap { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; background: var(--sys-color-surface-surface-container, #deebf7); display: flex; align-items: center; justify-content: center; }
+.avatar { width: 100%; height: 100%; object-fit: cover; }
+.avatarFallback { font-size: 32px; font-weight: 700; color: var(--sys-color-primary-primary, #690cb0); }
+.avatarLabel { font-size: 14px; font-weight: 600; color: var(--sys-color-primary-primary, #690cb0); cursor: pointer; }
+.avatarLabel:hover { opacity: 0.8; }
+.avatarInput { display: none; }
+
 .field {
   display: flex;
   flex-direction: column;
