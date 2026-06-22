@@ -16,7 +16,6 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: var(--sys-color-surface-on-surface, #0f273e);
 }
 
 .heroContent {
@@ -162,7 +161,6 @@
 /* How It Works */
 .howItWorks {
   padding: 80px 0;
-  background: var(--sys-color-primary-primary, #690cb0);
 }
 
 .steps {
@@ -251,7 +249,7 @@
 /* Footer */
 .footer {
   padding: 24px 0;
-  background: var(--sys-color-primary-primary, #690cb0);
+  border-top: 1px solid var(--sys-color-outline-outline-variant, #bbccdd);
 }
 
 .footerInner {
