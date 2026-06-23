@@ -3,6 +3,8 @@ import { TransitionLink } from '@/components/ui/transition-link'
 import { MarketingHeader } from '@/components/layout/marketing-header'
 import styles from './page.module.css'
 
+const currentYear = new Date().getFullYear()
+
 export default async function LandingPage() {
   return (
     <div id="page-root" className={styles.page}>
@@ -93,7 +95,7 @@ export default async function LandingPage() {
             <Link href="#how-it-works" className={styles.footerLink}>How It Works</Link>
             <TransitionLink href="/auth" className={styles.footerLink}>Log in</TransitionLink>
           </div>
-          <p className={styles.footerCopy}>&copy; {new Date().getFullYear()} Menowell. All rights reserved.</p>
+          <p className={styles.footerCopy}>&copy; {currentYear} Menowell. All rights reserved.</p>
         </div>
       </footer>
     </div>
