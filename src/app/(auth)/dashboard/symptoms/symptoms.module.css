@@ -1,5 +1,5 @@
 .root { max-width: 760px; margin: 0 auto; padding: 40px 24px; }
-.pageHeader { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0; flex-wrap: wrap; gap: 8px; }
+.pageHeader { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 8px; }
 .title { font-size: 28px; font-weight: 700; line-height: 0; color: var(--sys-color-surface-on-surface, #0f273e); order: 1; }
 .logBtn { background: var(--sys-color-primary-primary, #690cb0); color: var(--sys-color-primary-on-primary, #fff); border-radius: 9999px; padding: 10px 22px; font-size: 14px; font-weight: 600; transition: opacity 200ms ease-out; order: 2; }
 .logBtn:hover { opacity: 0.88; }
@@ -10,8 +10,8 @@
   .supportText { order: 2; margin-top: 20px; }
   .logBtn { order: 3; margin-top: 20px; }
 }
-.list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
-.logItem { background: var(--sys-color-surface-surface, #fff); border: 1px solid var(--sys-color-outline-outline-variant, #bbccdd); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+.logItem { background: var(--sys-color-surface-surface, #fff); border: 1px solid var(--sys-color-outline-outline-variant, #bbccdd); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
 .logInfo { display: flex; justify-content: space-between; align-items: center; }
 .symptomName { font-size: 16px; font-weight: 600; color: var(--sys-color-surface-on-surface, #0f273e); }
 .logDate { font-size: 13px; color: var(--sys-color-surface-on-surface-variant, #334e68); }

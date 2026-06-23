@@ -2,14 +2,22 @@
 .pageHeader { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
 .title { font-size: 28px; font-weight: 700; color: var(--sys-color-surface-on-surface, #0f273e); margin: 0; }
 .subtitle { font-size: 15px; color: var(--sys-color-surface-on-surface-variant, #334e68); margin: 0 0 28px; }
-.newPostBtn { background: var(--sys-color-primary-primary, #690cb0); color: var(--sys-color-primary-on-primary, #fff); border-radius: 9999px; padding: 10px 22px; font-size: 14px; font-weight: 600; transition: opacity 200ms ease-out; }
+.newPostBtn { background: var(--sys-color-primary-primary, #690cb0); color: var(--sys-color-primary-on-primary, #fff); border-radius: 9999px; padding: 10px 22px; font-size: 14px; font-weight: 600; transition: opacity 200ms ease-out; text-decoration: none; display: inline-block; }
 .newPostBtn:hover { opacity: 0.88; }
-.pageHeader .newPostBtn { display: none; }
 .empty { text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 12px; min-height: 40vh; font-size: 16px; color: var(--sys-color-surface-on-surface-variant, #334e68); }
 .list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-.postCard { background: var(--sys-color-surface-surface, #fff); border: 1px solid var(--sys-color-outline-outline-variant, #bbccdd); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
-.postCard:focus-visible { outline: 1px solid var(--sys-color-outline-outline-variant, #bbccdd); }
+.postCard { background: var(--sys-color-surface-surface, #fff); border: 1px solid var(--sys-color-outline-outline-variant, #bbccdd); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 10px; text-decoration: none; transition: box-shadow 200ms ease-out, border-color 200ms ease-out; }
+.postCard:hover { border-color: var(--sys-color-primary-primary, #690cb0); box-shadow: 0 2px 12px rgba(105, 12, 176, 0.1); }
+.postCard:focus-visible { outline: 2px solid var(--sys-color-primary-primary, #690cb0); outline-offset: 2px; }
 
 .author { font-size: 13px; font-weight: 600; color: var(--sys-color-primary-primary, #690cb0); }
 .content { font-size: 15px; color: var(--sys-color-surface-on-surface, #0f273e); line-height: 1.55; }
 .meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--sys-color-surface-on-surface-variant, #334e68); border-top: 1px solid var(--sys-color-outline-outline-variant, #bbccdd); padding-top: 10px; }
+
+@media (max-width: 640px) {
+  .root { padding: 24px 16px; }
+  .pageHeader { flex-direction: column; align-items: flex-start; }
+  .title { font-size: 24px; }
+  .list { gap: 12px; }
+  .postCard { padding: 16px; }
+}

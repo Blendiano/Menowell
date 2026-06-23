@@ -10,7 +10,7 @@ export async function markAsRead(notificationId: string) {
 
   try {
     await markAsReadService(notificationId, userId)
-    revalidatePath('/notifications')
+    revalidatePath('/dashboard/notifications')
     return { data: { success: true } }
   } catch (error) {
     console.error('markAsRead error:', error)
@@ -24,7 +24,7 @@ export async function markAllAsRead() {
 
   try {
     await markAllAsReadService(userId)
-    revalidatePath('/notifications')
+    revalidatePath('/dashboard/notifications')
     return { data: { success: true } }
   } catch (error) {
     console.error('markAllAsRead error:', error)

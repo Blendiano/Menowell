@@ -20,7 +20,7 @@ export async function createSymptomLog(
 
   try {
     const log = await createSymptomLogService(userId, parsed.data)
-    revalidatePath('/symptoms')
+    revalidatePath('/dashboard/symptoms')
     revalidatePath('/dashboard')
     return { data: log }
   } catch (error) {

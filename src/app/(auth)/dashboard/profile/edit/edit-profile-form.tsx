@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { updateProfile } from '@/features/profile/actions'
+import { logNavigation } from '@/lib/navigation'
 import { Button } from '@/components/ui/button'
 import styles from './edit-profile.module.css'
 
@@ -39,7 +40,9 @@ export function EditProfileForm({ user }: { user: TUserData }) {
         setError(result.error ?? 'Something went wrong.')
       } else {
         setSuccess(true)
-        router.refresh()
+        const target = '/dashboard/profile'
+        logNavigation({ to: target, apiResponse: result })
+        setTimeout(() => router.push(target), 1500)
       }
     })
   }

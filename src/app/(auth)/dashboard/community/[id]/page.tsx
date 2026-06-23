@@ -1,5 +1,6 @@
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
+import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { CommentForm } from './comment-form'
 import type { CommunityPost, Comment, User } from '@prisma/client'
@@ -48,6 +49,11 @@ export default async function PostDetailPage({
 
   return (
     <main className={styles.root}>
+      <div className={styles.pageHeader}>
+        <h1 className={styles.title}>Community</h1>
+        <Link href="/dashboard/community/new" className={styles.newPostBtn}>+ New post</Link>
+      </div>
+
       <article className={styles.post}>
         <div className={styles.postHeader}>
           <span className={styles.author}>{authorName}</span>

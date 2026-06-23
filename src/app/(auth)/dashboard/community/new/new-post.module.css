@@ -89,3 +89,15 @@
   justify-content: flex-end;
   padding-top: 8px;
 }
+
+.actions button[type="submit"]:hover {
+  color: var(--sys-color-primary-primary, #690cb0);
+  background: transparent;
+}
+
+@media (max-width: 640px) {
+  .root { padding: 24px 16px; }
+  .title { font-size: 24px; }
+  .actions { flex-direction: column; }
+  .actions button { width: 100%; }
+}

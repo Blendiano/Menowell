@@ -1,16 +1,11 @@
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { getSymptomHistory } from '@/features/symptoms/actions'
+import { SYMPTOM_LABELS } from '@/lib/constants'
 import Link from 'next/link'
 import styles from './symptoms.module.css'
 
 export const dynamic = 'force-dynamic'
-
-const SYMPTOM_LABELS: Record<string, string> = {
-  hot_flash: 'Hot Flash', night_sweat: 'Night Sweat', fatigue: 'Fatigue',
-  insomnia: 'Insomnia', anxiety: 'Anxiety', mood_swing: 'Mood Swing',
-  brain_fog: 'Brain Fog', joint_pain: 'Joint Pain', headache: 'Headache', other: 'Other',
-}
 
 export default async function SymptomsPage() {
   const session = await auth()

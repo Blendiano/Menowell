@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { createSymptomLog } from '@/features/symptoms/actions'
+import { logNavigation } from '@/lib/navigation'
 import styles from './new-symptom.module.css'
 
 export const dynamic = 'force-dynamic'
@@ -48,7 +49,9 @@ export default function NewSymptomPage() {
       if ('error' in result) {
         setError(result.error)
       } else {
-        router.push('/symptoms')
+        const target = '/dashboard/symptoms'
+        logNavigation({ to: target, ids: {}, apiResponse: result })
+        router.push(target)
       }
     })
   }

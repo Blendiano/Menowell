@@ -3,6 +3,7 @@
 import { useState, useTransition, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createPost } from '@/features/community/actions'
+import { logNavigation } from '@/lib/navigation'
 import { Button } from '@/components/ui/button'
 import styles from './new-post.module.css'
 
@@ -32,8 +33,14 @@ export default function NewPostPage() {
 
       if ('error' in result) {
         setError(result.error ?? 'Something went wrong.')
+      } else if ('data' in result && result.data?.id) {
+        const target = `/dashboard/community/${result.data.id}`
+        logNavigation({ to: target, ids: { postId: result.data.id }, apiResponse: result })
+        router.push(target)
       } else {
-        router.push('/community')
+        const target = '/dashboard/community'
+        logNavigation({ to: target, apiResponse: result })
+        router.push(target)
       }
     })
   }

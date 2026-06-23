@@ -36,13 +36,15 @@ export default async function CommunityPage() {
       ) : (
         <ul className={styles.list}>
           {posts.map((post: CommunityPost & { user: Pick<User, 'name'> | null; _count: { comments: number; reactions: number } }) => (
-            <li key={post.id} className={styles.postCard}>
-              <p className={styles.author}>{post.anonymous ? 'Anonymous' : post.user?.name ?? 'Member'}</p>
-              <p className={styles.content}>{post.content}</p>
-              <div className={styles.meta}>
-                <span>{post._count.comments} {post._count.comments === 1 ? 'reply' : 'replies'}</span>
-                <span>{new Date(post.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
-              </div>
+            <li key={post.id}>
+              <Link href={`/dashboard/community/${post.id}`} className={styles.postCard}>
+                <p className={styles.author}>{post.anonymous ? 'Anonymous' : post.user?.name ?? 'Member'}</p>
+                <p className={styles.content}>{post.content}</p>
+                <div className={styles.meta}>
+                  <span>{post._count.comments} {post._count.comments === 1 ? 'reply' : 'replies'}</span>
+                  <span>{new Date(post.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
+                </div>
+              </Link>
             </li>
           ))}
         </ul>

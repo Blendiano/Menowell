@@ -15,7 +15,7 @@ export async function updateProfile(input: unknown) {
 
   try {
     await updateProfileService(userId, parsed.data)
-    revalidatePath('/profile')
+    revalidatePath('/dashboard/profile')
     revalidatePath('/dashboard')
     return { data: { success: true } }
   } catch (error) {
@@ -30,7 +30,7 @@ export async function determineStage() {
 
   try {
     const stage = await determineMenopauseStage(userId)
-    revalidatePath('/profile')
+    revalidatePath('/dashboard/profile')
     revalidatePath('/dashboard')
     return { data: stage }
   } catch (error) {

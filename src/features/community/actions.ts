@@ -12,9 +12,10 @@ export async function createPost(input: unknown) {
   if (!parsed.success) return { error: parsed.error.message }
 
   try {
-    await createPostService(userId, parsed.data)
-    revalidatePath('/community')
-    return { data: { success: true } }
+    const post = await createPostService(userId, parsed.data)
+    revalidatePath('/dashboard/community')
+    revalidatePath('/dashboard')
+    return { data: { id: post.id } }
   } catch (error) {
     console.error('createPost error:', error)
     return { error: 'Failed to create post.' }
@@ -30,7 +31,8 @@ export async function createComment(postId: string, input: unknown) {
 
   try {
     await createCommentService(userId, postId, parsed.data)
-    revalidatePath(`/community/${postId}`)
+    revalidatePath(`/dashboard/community/${postId}`)
+    revalidatePath('/dashboard/community')
     return { data: { success: true } }
   } catch (error) {
     console.error('createComment error:', error)
@@ -44,7 +46,8 @@ export async function toggleReaction(postId: string, type: string) {
 
   try {
     const result = await toggleReactionService(userId, postId, type)
-    revalidatePath(`/community/${postId}`)
+    revalidatePath(`/dashboard/community/${postId}`)
+    revalidatePath('/dashboard/community')
     return { data: result }
   } catch (error) {
     console.error('toggleReaction error:', error)
