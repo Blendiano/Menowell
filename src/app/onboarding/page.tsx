@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
 import { saveOnboarding } from '@/features/onboarding/actions'
 import { Celebration } from './celebration'
 import styles from './onboarding.module.css'
@@ -133,17 +132,12 @@ export default function OnboardingPage() {
           setLoading(false)
           return
         }
-        const formData = new FormData()
-        formData.append('file', profileImage)
-        const uploadRes = await fetch('/api/upload/avatar', { method: 'POST', body: formData })
-        if (!uploadRes.ok) {
-          const uploadData = await uploadRes.json().catch(() => ({ error: 'Failed to upload file.' }))
-          setError(uploadData.error || 'Failed to upload file.')
-          setLoading(false)
-          return
-        }
-        const uploadData = await uploadRes.json()
-        imageUrl = uploadData.data.url
+        imageUrl = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => resolve(reader.result as string)
+          reader.onerror = () => reject(new Error('Failed to read file.'))
+          reader.readAsDataURL(profileImage)
+        })
       }
 
       const result = await saveOnboarding({
@@ -162,9 +156,9 @@ export default function OnboardingPage() {
       }
 
       setShowCelebration(true)
-      await new Promise(r => setTimeout(r, 2000))
-      setShowCelebration(false)
       setLoading(false)
+      await new Promise(r => setTimeout(r, 1000))
+      setShowCelebration(false)
       router.push('/dashboard')
     } catch (err) {
       console.error('Onboarding error:', err)
@@ -283,7 +277,7 @@ export default function OnboardingPage() {
                 className={styles.avatarCircle}
               >
                 {profileImagePreview ? (
-                  <Image src={profileImagePreview} alt="Profile" fill style={{ objectFit: 'cover' }} />
+                  <img src={profileImagePreview} alt="Profile" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
                 ) : (
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#627d98" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
@@ -333,6 +327,7 @@ export default function OnboardingPage() {
                 </div>
               </div>
             </div>
+
           </section>
         )}
 

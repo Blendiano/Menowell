@@ -10,6 +10,7 @@ import styles from './auth-card.module.css'
 export function RegisterForm() {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [showPassword, setShowPassword] = useState(false)
@@ -84,12 +85,11 @@ export function RegisterForm() {
       if (!res.ok) {
         setError(data.error ?? 'Registration failed. Please try again.')
       } else {
-        const result = await signIn('credentials', { email, password, redirect: false })
-        if (result?.error) {
-          router.push('/auth')
-        } else {
-          router.push('/onboarding')
-        }
+        setSuccess(true)
+        setLoading(false)
+        await signIn('credentials', { email, password, redirect: false })
+        await new Promise(r => setTimeout(r, 1500))
+        router.push('/onboarding')
       }
     } catch (error) {
       console.error('Registration error:', error)
@@ -129,10 +129,11 @@ export function RegisterForm() {
         {fieldErrors.password && <p className={styles.fieldError}>{fieldErrors.password}</p>}
       </div>
 
+      {success && <p className={styles.successMsg}>Account created successfully!</p>}
       {error && <p className={styles.errorMsg} role="alert">{error}</p>}
 
-      <button type="submit" className={styles.submitBtn} disabled={loading} aria-busy={loading}>
-        {loading ? <><span className={styles.spinner} /> Creating account…</> : 'Create account'} <span style={{fontSize:20}}>→</span>
+      <button type="submit" className={styles.submitBtn} disabled={loading || success} aria-busy={loading}>
+        {success ? 'Account created' : loading ? <><span className={styles.spinner} /> Creating account…</> : 'Create account'} <span style={{fontSize:20}}>→</span>
       </button>
 
       <Link href="/" className={styles.backLink}>← Back to home</Link>

@@ -47,6 +47,7 @@
 .summaryLabel { font-size:14px; color:#ffffff; }
 .summaryValue { font-size:14px; font-weight:600; color:#ffffff; text-align:right; }
 .celebrationEmoji { font-size:48px; animation:bounce 0.6s ease infinite; position:relative; z-index:1; }
+.successMessage { font-size:18px; font-weight:700; color:#fff; text-align:center; margin-bottom:16px; position:relative; z-index:1; text-shadow:0 2px 8px rgba(0,0,0,0.3); }
 .errorMsg { font-size:13px; color:var(--sys-color-error-error,#f01b1f); margin-top:2px; }
 .spinner { display:inline-block; width:18px; height:18px; border:2.5px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; }
 @keyframes spin { to { transform:rotate(360deg); } }
