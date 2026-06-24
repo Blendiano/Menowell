@@ -123,15 +123,26 @@ export default function OnboardingPage() {
     try {
       let imageUrl: string | undefined
       if (profileImage) {
-        const formData = new FormData()
-        formData.append('file', profileImage)
-        const uploadRes = await fetch('/api/upload/avatar', { method: 'POST', body: formData })
-        const uploadData = await uploadRes.json()
-        if (uploadData.error) {
-          setError(uploadData.error)
+        if (!['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(profileImage.type)) {
+          setError('Invalid file type. Allowed: JPEG, PNG, WebP, GIF.')
           setLoading(false)
           return
         }
+        if (profileImage.size > 2 * 1024 * 1024) {
+          setError('File too large. Maximum 2 MB.')
+          setLoading(false)
+          return
+        }
+        const formData = new FormData()
+        formData.append('file', profileImage)
+        const uploadRes = await fetch('/api/upload/avatar', { method: 'POST', body: formData })
+        if (!uploadRes.ok) {
+          const uploadData = await uploadRes.json().catch(() => ({ error: 'Failed to upload file.' }))
+          setError(uploadData.error || 'Failed to upload file.')
+          setLoading(false)
+          return
+        }
+        const uploadData = await uploadRes.json()
         imageUrl = uploadData.data.url
       }
 
@@ -334,7 +345,7 @@ export default function OnboardingPage() {
             </button>
           ) : <div />}
           <button type="button" className={styles.btnPrimary} disabled={!canProceed() || loading} onClick={handleNext}>
-            {loading ? <span className={styles.spinner} /> : step === totalSteps - 1 ? 'Get started & go to dashboard' : 'Continue'}
+            {loading ? <span className={styles.spinner} /> : step === totalSteps - 1 ? 'Continue' : 'Continue'}
           </button>
         </div>
       </div>
